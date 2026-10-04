@@ -1026,3 +1026,64 @@ button.benefit:focus-visible {box-shadow:inset 0 0 0 1px var(--yellow);}
 .blog-end-author .blog-view-count[hidden]{display:none!important;}
 
 .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;}
+
+
+/* Article reactions — shared by overlay and standalone article pages. */
+.blog-reactions {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:18px;
+  margin:8px 0 20px;
+}
+.blog-reactions[hidden] {display:none!important;}
+.blog-reaction-btn {
+  appearance:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  min-width:58px;
+  min-height:42px;
+  padding:4px 8px;
+  border:0;
+  background:transparent;
+  color:#8d8d8d;
+  font:900 17px/1 "Barlow Condensed",Arial,sans-serif;
+  cursor:pointer;
+  transition:color .16s ease, transform .16s ease, opacity .16s ease;
+}
+.blog-reaction-btn:hover,
+.blog-reaction-btn:focus-visible {
+  color:var(--yellow);
+  outline:none;
+}
+.blog-reaction-btn:active {
+  transform:scale(.94);
+}
+.blog-reaction-btn.is-active {
+  color:var(--yellow);
+}
+.blog-reaction-btn:disabled {
+  cursor:default;
+}
+.blog-reactions.is-busy .blog-reaction-btn {
+  opacity:.55;
+}
+.blog-reaction-icon {
+  width:28px;
+  height:28px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2.25;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.blog-reader-light .blog-reaction-btn {
+  color:#777;
+}
+.blog-reader-light .blog-reaction-btn:hover,
+.blog-reader-light .blog-reaction-btn:focus-visible,
+.blog-reader-light .blog-reaction-btn.is-active {
+  color:#111;
+}
