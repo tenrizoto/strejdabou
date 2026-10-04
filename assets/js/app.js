@@ -800,7 +800,7 @@ async function ensureArticleCommon(){
         return;
       }
       const script = document.createElement('script');
-      script.src = '/assets/js/article-common.js?v=279';
+      script.src = '/assets/js/article-common.js?v=280';
       script.defer = true;
       script.dataset.articleCommonLoader = '1';
       script.onload = resolve;

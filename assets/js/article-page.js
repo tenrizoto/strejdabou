@@ -7,26 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const counter = document.querySelector("[data-article-view-count]");
   const key = "devbybouBlogTheme";
 
-  // Standalone article footer. Edit links here once; every article uses the same footer.
-  const ARTICLE_FOOTER_LINKS = [
-    {label:"Domů", href:"/"},
-    {label:"Všechny články", href:"/?detail=blog"},
-    {label:"O mně", href:"/?detail=o-mne"},
-    {label:"Ceník", href:"/?detail=cenik"}
-  ];
-
-  const footerHost = document.getElementById("articleSiteFooter");
-  if (footerHost) {
-    footerHost.className = "fixed-footer-shell";
-    footerHost.innerHTML = `
-      <img class="footer-divider" src="../../assets/images/embedded-06.png" alt="" aria-hidden="true">
-      <footer class="footer">
-        <nav class="footer-links" aria-label="Odkazy v patičce článku">
-          ${ARTICLE_FOOTER_LINKS.map((link,index) => `${index ? '<span class="sep" aria-hidden="true">|</span>' : ''}<a href="${link.href}">${link.label}</a>`).join("")}
-        </nav>
-        <span>© 2004–<span data-current-year></span> <strong>DEV<span class="by">BY</span>BOU</strong></span>
-      </footer>`;
-  }
+  // Shared standalone footer: the same footer is also used on /blog/.
+  window.DEVBYBOU_ARTICLE_UI?.renderSiteFooter(document.getElementById("articleSiteFooter"));
 
   const applyTheme = theme => {
     const light = theme === "light";
@@ -48,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.querySelector("[data-blog-all]")?.addEventListener("click", () => {
-    location.href = "/?detail=blog";
+    location.href = "/blog/";
   });
 
   document.querySelector("[data-article-share]")?.addEventListener("click", async event => {
