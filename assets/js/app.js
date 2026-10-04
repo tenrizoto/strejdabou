@@ -558,10 +558,10 @@ async function fetchArticleRecord(entry){
   const readingMatch = readingTime.match(/\d+/);
   const excerpt = doc.querySelector(".blog-detail-lead")?.textContent?.trim() ||
     doc.querySelector('meta[name="description"]')?.getAttribute("content")?.trim() || "";
+  const detail = doc.querySelector(".blog-detail");
   const body = doc.querySelector(".blog-article");
-  const sourceNote = doc.querySelector(".article-source-note");
 
-  if (!title || !body) throw new Error(`Article ${slug}: missing .blog-detail-title or .blog-article`);
+  if (!title || !body || !detail) throw new Error(`Article ${slug}: missing article structure`);
 
   return {
     slug,
@@ -572,8 +572,7 @@ async function fetchArticleRecord(entry){
     excerpt,
     readingTime,
     readingMinutes:readingMatch ? Number(readingMatch[0]) : 1,
-    bodyHtml:body.outerHTML,
-    sourceNoteHtml:sourceNote ? sourceNote.outerHTML : ""
+    articleHtml:detail.outerHTML
   };
 }
 
@@ -768,21 +767,6 @@ function getNextBlogArticleIndex(currentIndex){
   return candidates[seed % candidates.length];
 }
 
-function renderBlogArticleFooter(){
-  return `
-    <footer class="blog-article-footer">
-      <div class="blog-end-divider" aria-hidden="true"></div>
-      <p class="blog-end-author">Článek napsal Lukáš Bou Hlaváček</p>
-      <p class="blog-view-count" data-article-view-count hidden></p>
-      <div class="blog-end-actions">
-        <button class="blog-end-action" type="button" data-blog-all>Všechny články</button>
-        <span class="blog-end-separator" aria-hidden="true">|</span>
-        <button class="blog-end-action" type="button" data-blog-share>Sdílet článek</button>
-      </div>
-    </footer>
-  `;
-}
-
 async function shareBlogArticle(article){
   const articleUrl = `${location.origin}/clanek/${article.slug}/`;
   const shareData = {title:article.title, text:article.excerpt, url:articleUrl};
@@ -826,31 +810,8 @@ async function renderBlogArticle(index, {pushHistory=true} = {}){
     );
   }
 
-  infoSheetContent.innerHTML = `
-    <article class="blog-detail">
-      <header class="blog-detail-head">
-        <div class="blog-reader-controls">
-          <button class="blog-back" type="button" aria-label="Zpět na seznam článků">
-            <svg class="blog-back-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M18.5 7.5 10 16l8.5 8.5"/><path d="M10.5 16H25"/></svg>
-          </button>
-          <button class="blog-theme-toggle" type="button" aria-label="Přepnout světlý režim článku" aria-pressed="false">
-            <svg class="blog-theme-icon" viewBox="0 0 32 32" aria-hidden="true"><path class="blog-theme-bulb" d="M11.2 20.3c-2.1-1.5-3.4-3.9-3.4-6.6a8.2 8.2 0 0 1 16.4 0c0 2.7-1.3 5.1-3.4 6.6-1 .8-1.6 1.8-1.7 3H12.9c-.1-1.2-.7-2.2-1.7-3Z"/><path d="M12.7 26h6.6"/><path d="M13.8 29h4.4"/><path class="blog-theme-rays" d="M16 2v2.1M5.6 6.3l1.5 1.5M26.4 6.3l-1.5 1.5M3 15h2.2M29 15h-2.2"/></svg>
-          </button>
-        </div>
-        <div>
-          <h2 class="blog-detail-title">${article.title}</h2>
-          <div class="blog-detail-meta-row">
-            <button class="blog-detail-category" type="button" data-blog-detail-category="${article.category}" aria-label="Zobrazit články v kategorii ${article.category}">${article.category}</button>
-            <span class="blog-meta-stack"><span class="blog-detail-meta">${article.date}</span><span class="blog-reading-time">${articleReadingLabel(article)}</span></span>
-          </div>
-        </div>
-      </header>
-      <p class="blog-detail-lead">${article.excerpt}</p>
-      ${article.bodyHtml}
-      ${article.sourceNoteHtml}
-      ${renderBlogArticleFooter()}
-    </article>
-  `;
+  infoSheetContent.innerHTML = article.articleHtml;
+  window.DEVBYBOU_ARTICLE_UI?.renderEndFooter(infoSheetContent.querySelector("[data-article-end-footer]"));
 
   const scroller = infoSheet.querySelector(".info-sheet-card");
   scroller?.scrollTo({top:0, behavior:"smooth"});
@@ -868,7 +829,16 @@ async function renderBlogArticle(index, {pushHistory=true} = {}){
     applyBlogTheme(nextTheme);
   });
 
-  infoSheetContent.querySelector(".blog-back")?.addEventListener("click", () => {
+  const detailCategory = infoSheetContent.querySelector(".blog-detail-category");
+  if (detailCategory) {
+    detailCategory.dataset.blogDetailCategory = article.category;
+    detailCategory.setAttribute("role", "button");
+    detailCategory.setAttribute("tabindex", "0");
+    detailCategory.setAttribute("aria-label", `Zobrazit články v kategorii ${article.category}`);
+  }
+
+  infoSheetContent.querySelector(".blog-back")?.addEventListener("click", event => {
+    event.preventDefault();
     if (history.state?.devbybouBlogArticle) history.back();
     else {
       currentBlogArticleIndex = null;
