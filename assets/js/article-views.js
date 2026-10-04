@@ -2,6 +2,7 @@
   const apiUrl = () => window.DEVBYBOU_CONFIG?.articleViewApi || "";
   const todayKey = () => new Date().toISOString().slice(0, 10);
   const formatCount = value => `Přečteno ${Number(value || 0).toLocaleString("cs-CZ")}×`;
+  let activeCleanup = null;
 
   async function request(slug, method="GET") {
     const api = apiUrl();
@@ -18,7 +19,14 @@
     return response.json();
   }
 
+  function dispose(){
+    if (activeCleanup) activeCleanup();
+    activeCleanup = null;
+  }
+
   function mount({slug, articleElement, counterElement}) {
+    dispose();
+
     if (!slug || !articleElement || !counterElement || !apiUrl()) {
       if (counterElement) counterElement.hidden = true;
       return;
@@ -28,6 +36,7 @@
     let timeReady = false;
     let progressReady = false;
     let sent = false;
+    let timer = 0;
     const storageKey = `devbybou:article-view:${slug}:${todayKey()}`;
     const scrollRoot = articleElement.closest(".info-sheet-card");
     const scrollTarget = scrollRoot || window;
@@ -38,11 +47,10 @@
       counterElement.hidden = false;
     };
 
-    request(slug).then(data => show(data?.views)).catch(() => { counterElement.hidden = true; });
+    request(slug).then(data => show(data?.views)).catch(() => { if (!disposed) counterElement.hidden = true; });
 
     let alreadyCounted = false;
     try { alreadyCounted = localStorage.getItem(storageKey) === "1"; } catch (_) {}
-    if (alreadyCounted) return;
 
     const getProgress = () => {
       const rect = articleElement.getBoundingClientRect();
@@ -54,13 +62,18 @@
     };
 
     const cleanup = () => {
+      if (disposed) return;
+      disposed = true;
+      window.clearTimeout(timer);
       scrollTarget.removeEventListener("scroll", onScroll);
     };
+    activeCleanup = cleanup;
+
+    if (alreadyCounted) return;
 
     const maybeSend = async () => {
-      if (sent || !timeReady || !progressReady) return;
+      if (disposed || sent || !timeReady || !progressReady) return;
       sent = true;
-      cleanup();
       try {
         const data = await request(slug, "POST");
         show(data?.views);
@@ -77,8 +90,8 @@
 
     scrollTarget.addEventListener("scroll", onScroll, {passive:true});
     onScroll();
-    window.setTimeout(() => { timeReady = true; maybeSend(); }, 20000);
+    timer = window.setTimeout(() => { timeReady = true; maybeSend(); }, 20000);
   }
 
-  window.DEVBYBOU_ARTICLE_VIEWS = {mount};
+  window.DEVBYBOU_ARTICLE_VIEWS = {mount, dispose};
 })();

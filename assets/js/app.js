@@ -518,560 +518,12 @@ window.addEventListener("popstate",(event)=>{
 });
 
 
-const BLOG_ARTICLES = [
-  {
-    category: "Web a technologie",
-    title: "Deset tisíc AI agentů hledalo řešení za milion dolarů. Možná jsme právě viděli budoucnost vědecké práce",
-    slug: "deset-tisic-ai-agentu-budoucnost-vedecke-prace",
-    date: "28. 9. 2026",
-    excerpt: "Matematici mají zvláštní zálibu v problémech, na které lidstvo desítky nebo stovky let nedokáže přijít. Jedním z takových případů jsou Navierovy–Stokesovy rovnice.",
-    intro: [
-      "Navierovy–Stokesovy rovnice popisují proudění kapalin a plynů: vodu v potrubí, vzduch kolem křídla letadla, vítr, turbulence a prakticky všechno, co se kolem nás hýbe a není to pevný beton.",
-      "Rovnice používáme už dlouho. Jen jsme nevěděli, jestli se za určitých podmínek matematicky nerozbijí.",
-      "A 8. září 2026 OpenAI oznámila:",
-      "<strong>Rozbijí. A tady je důkaz.</strong>",
-      "Což je poměrně ambiciózní věta na úterní dopoledne."
-    ],
-    sections: [
-      {
-        heading: "Milion dolarů za odpověď na otázku, které většina lidí nerozumí",
-        paragraphs: [
-          "Navierův–Stokesův problém patří mezi sedm slavných Millennium Prize Problems, které v roce 2000 vyhlásil Clay Mathematics Institute. Každý z nich má hodnotu jednoho milionu dolarů.",
-          "Z původních sedmi byl dosud definitivně vyřešen pouze jeden — Poincarého domněnka. Clay Institute proto stále vede Navierův–Stokesův problém jako aktivní, přestože po zveřejnění práce OpenAI připustil, že může být fakticky vyřešen. Pravidla ale vyžadují publikaci, všeobecné přijetí matematickou komunitou a nejméně dvouletou dobu od zveřejnění výsledku.",
-          "Takže ne. Sam Altman si zatím nemůže skočit vyzvednout šek. I když s ohledem na finanční situaci OpenAI by mu milion dolarů stejně nijak nepomohl."
-        ]
-      },
-      {
-        heading: "Co se vlastně řešilo?",
-        paragraphs: [
-          "Představte si dokonale hladké proudění tekutiny. Na začátku známe její stav a pomocí rovnic chceme spočítat, co bude dělat dál.",
-          "Otázka zní:",
-          "<strong>Zůstane řešení vždy hladké a matematicky dobře definované, nebo může někdy v konečném čase vzniknout singularita — bod, kde některé hodnoty utečou matematicky do extrému?</strong>",
-          "Zjednodušeně: může se matematický popis proudící kapaliny najednou rozbít?",
-          "OpenAI tvrdí, že její systém nalezl konstrukci, ve které skutečně vznikne singularita v konečném čase.",
-          "Tedy nikoliv:",
-          "„Dokázali jsme, že se rovnice nikdy nerozbijí.“",
-          "Ale:",
-          "„Našli jsme případ, kdy se rozbijí.“",
-          "A tím by byl problém rozhodnut.",
-          "OpenAI zveřejnila klasický matematický důkaz i jeho formalizovanou podobu v systému Lean, který umožňuje jednotlivé logické kroky strojově kontrolovat. Způsob, jakým se k důkazu došlo, je možná ještě zajímavější než samotný výsledek."
-        ]
-      },
-      {
-        heading: "Jeden génius? Ne. Deset tisíc agentů.",
-        paragraphs: [
-          "Představa „AI vyřešila matematický problém“ vyvolává obraz digitálního Einsteina, který sedí v datacentru a hluboce přemýšlí.",
-          "Realita byla podstatně podivnější.",
-          "OpenAI nasadila přibližně 10 000 AI agentů současně. Byli rozděleni do skupin a dostávali různé formulace problému. Zkoušeli různé přístupy: jedni hledali důkaz, že hladké řešení existuje vždy, jiní způsob, jak ukázat opak.",
-          "První agenti byli spuštěni 1. září a k výsledku systém dospěl po přibližně 88 hodinách. Následovala formalizace důkazu v Leanu a další kontrola, která zabrala zhruba 17 hodin.",
-          "Během práce na Navierově–Stokesově problému si agenti vyměnili asi 2,7 milionu zpráv a vytvořili přibližně 130 miliard výstupních tokenů. Celý experiment napříč zadanými matematickými problémy spotřeboval kolem 300 miliard tokenů."
-        ]
-      },
-      {
-        heading: "Tohle je možná skutečný průlom",
-        paragraphs: [
-          "Samotná schopnost AI řešit matematiku není nová. Modely už nějakou dobu dokazují věty, řeší olympiádní úlohy a pomáhají matematikům hledat nové směry.",
-          "Nové je měřítko.",
-          "Tady nezačínáme vidět jen lepšího chatbota, ale něco, co připomíná digitální výzkumnou organizaci.",
-          "Představte si deset tisíc rychlých juniorních výzkumníků, kteří nepotřebují spát, mohou několik dní paralelně testovat tisíce nápadů a průběžně si předávat výsledky. Jeden najde zajímavou cestu, další ji rozpracují, většina zjistí, že nikam nevede, a několik z nich objeví něco podstatného.",
-          "Lidská věda něco podobného dělá také. Jen tomu říkáme univerzity, konference, publikace a třicet let kariéry.",
-          "AI to v tomto experimentu udělala za několik dní."
-        ]
-      },
-      {
-        heading: "Jenže matematika má jednu nepříjemnou vlastnost: důkaz musí být správně",
-        paragraphs: [
-          "Tady bych brzdil titulky typu:",
-          "<strong>AI VYŘEŠILA PROBLÉM TISÍCILETÍ ZA ČTYŘI DNY. MATEMATICI MOHOU JÍT DOMŮ.</strong>",
-          "Nemohou. Matematický důkaz není správný proto, že ho zveřejnila velká firma nebo že při jeho výpočtu shořel rozpočet menšího evropského města. Musí obstát před lidmi, jejichž profesní zálibou je několik měsíců hledat jednu drobnou chybu na straně 84.",
-          "Práce OpenAI obsahuje formalizaci v Leanu, což výrazně zvyšuje důvěru v logickou konzistenci důkazu. Vědecká komunita ale stále potřebuje pochopit předpoklady, konstrukci i význam výsledku.",
-          "Clay Mathematics Institute proto cenu zatím nikomu nepředal. OpenAI sama výslovně uvádí, že o milionovou cenu nyní neusiluje.",
-          "Mezi „firma zveřejnila řešení“ a „matematická komunita definitivně uznala jeden z problémů tisíciletí jako vyřešený“ vede ještě dlouhá cesta. A matematika má tu otravnou vlastnost, že na ní tisková zpráva neplatí."
-        ]
-      },
-      {
-        heading: "A samozřejmě přišla kontroverze",
-        paragraphs: [
-          "Protože by nebyl rok 2026, kdyby významný průlom v umělé inteligenci nepřišel s minimálně jedním vláknem obvinění.",
-          "Matematik Tristan Buckmaster a výzkumník společnosti Anthropic Levent Alpöge pracovali ve stejné době na příbuzném problému týkajícím se Eulerových rovnic. Objevily se otázky, zda OpenAI nezačala určitý směr zkoumat poté, co se dozvěděla o jejich neveřejné práci, případně zda se k některým informacím nemohla dostat prostřednictvím používání svých modelů.",
-          "OpenAI to odmítla. Tvrdí, že její systém k jejich práci přístup neměl, že příslušné uživatelské prompty nemohly ovlivnit trénink modelu a že výsledky obou týmů se týkají odlišných variant problému. Zároveň uznala prioritu Alpögeho a Buckmastera u jejich výsledku pro nucené Eulerovy rovnice.",
-          "Tahle debata je předzvěstí ještě většího problému.",
-          "<strong>Co bude v době AI vlastně znamenat vědecké prvenství?</strong>",
-          "Kdo je autorem výsledku, pokud člověk položí otázku a deset tisíc agentů nalezne důkaz? Firma, která model vytvořila? Lidé, kteří experiment spustili? Autoři vědeckých prací, na kterých se systém naučil matematiku? Nebo samotná AI, která právně není skoro nic?",
-          "Máme před sebou krásných pár desetiletí filozofických hádek."
-        ]
-      },
-      {
-        heading: "Ne, matematici nejsou zbyteční",
-        paragraphs: [
-          "Mohlo by být lákavé skončit větou:",
-          "<strong>Tak, a AI právě nahradila matematiky.</strong>",
-          "Jenže to by bylo asi stejně přesné jako tvrdit, že kalkulačka nahradila účetní a fotoaparát malíře.",
-          "Možná se ale zásadně změní jejich práce.",
-          "Vědec budoucnosti nemusí sedět tři roky nad jednou slepou uličkou. Může formulovat problém, navrhovat směry, řídit stovky nebo tisíce agentů, vyhodnocovat jejich výsledky a hlavně se ptát:",
-          "<strong>Proč je ten výsledek zajímavý?</strong>",
-          "Věda není jen produkce správných vět. Je také o výběru správných otázek, pochopení souvislostí a schopnosti poznat, že právě tahle zvláštní vlastnost rovnice může změnit celý obor.",
-          "Deset tisíc agentů dokáže velmi rychle hledat. Ale někdo jim pořád musí říct, co stojí za hledání."
-        ]
-      },
-      {
-        heading: "A možná jsme právě viděli budoucnost práce",
-        paragraphs: [
-          "Na celém příběhu mě proto nejvíc nezajímá Navier–Stokes. Ani milion dolarů. Ani 130 miliard tokenů.",
-          "Nejzajímavější je organizace inteligence.",
-          "Ještě nedávno jsme AI používali stylem:",
-          "<strong>Člověk položí otázku → AI odpoví.</strong>",
-          "Tady se dělo něco jiného:",
-          "<strong>Člověk zadal cíl → tisíce digitálních agentů si rozdělilo práci → experimentovalo → komunikovalo → zahazovalo chyby → spojovalo poznatky → vytvořilo výsledek.</strong>",
-          "A to už není jen chatbot. Začíná to připomínat instituci. Dnes matematickou laboratoř. Zítra vývojářský tým, výzkumné oddělení farmaceutické společnosti, projektanty, analytiky. Možná celou malou firmu.",
-          "Samozřejmě s drobným detailem, že místo firemní kuchyňky potřebuje několik datacenter a energetickou spotřebu, na kterou se raději moc neptejte.",
-          "Navierovy–Stokesovy rovnice možná dostanou svůj milionový šek. Možná se v důkazu objeví chyba a příběh získá úplně jiný konec. To teď není nejdůležitější.",
-          "Protože i kdyby některý detail důkazu neobstál, experiment už ukázal něco jiného:",
-          "<strong>AI nemusí být jen nástroj, se kterým člověk pracuje. Může se z ní stát celý tým, který člověk řídí.</strong>",
-          "A jestli hledáme okamžik, kdy se z chatbotů začíná stávat něco podstatně většího, deset tisíc agentů hádajících se 88 hodin nad rovnicemi starými téměř století je docela dobrý kandidát."
-        ]
-      }
-    ]
-  },
-  {
-    category: "Web a technologie",
-    title: "Web v druhé polovině dvacátých let. Internet se nezměnil, internet se mění pořád",
-    slug: "web-v-druhe-polovine-dvacatych-let",
-    pinned: true,
-    date: "1. 10. 2026",
-    excerpt: "Od vytáčeného modemu přes blikající GIFy až po AI crawlery. Internet dospěl, změnil pravidla hry a některé firemní weby pořád čekají, až jim někdo řekne, že už není rok 2007.",
-    intro: [
-      "Pamatuji dobu, kdy připojení k internetu vydávalo zvuky, které by dnes mladší generace považovala za poruchu elektroniky.",
-      "Pamatuji web devadesátých let. Barevná pozadí, blikající GIFy, počítadla návštěvnosti, rámečky, tabulky a hrdé nápisy „optimalizováno pro rozlišení 800 × 600“. Webové stránky tehdy nebyly samozřejmost. Samotná skutečnost, že někdo měl web, byla událost.",
-      "Od té doby jsme prošli katalogy a portály, érou vyhledávačů, nástupem Googlu, Webem 2.0, sociálními sítěmi, smartphony, responzivním designem, aplikacemi a cloudem.",
-      "A teď přichází další změna.",
-      "Umělá inteligence.",
-      "Ne jako jedna nová funkce někde na internetu, ale jako něco, co postupně mění samotný způsob, jakým internet používáme.",
-      "Nejlépe se tento vývoj dá popsat jako životní cyklus webu. Web se narodí jako jednoduchá prezentace, postupně se přizpůsobuje novým technologiím a způsobům používání internetu, a pokud se nevyvíjí, začne stárnout rychleji než firma, kterou reprezentuje.",
-      "A právě proto dnes nestačí vytvořit web tak, jak se weby vytvářely před deseti nebo patnácti lety."
-    ],
-    sections: [
-      {
-        heading: "Web devadesátých let měl úplně jiný úkol",
-        paragraphs: [
-          "První firemní stránky bývaly v zásadě elektronickou verzí letáku. Obsahovaly název firmy, stručnou informaci o tom, co dělá, telefon, adresu a možná fotografii budovy. A pokud byl webmaster skutečný dobrodruh, také animovanou obálku vedle e-mailové adresy.",
-          "Fungovalo to, protože jsme tehdy internet používali jinak. Informace nebyly všudypřítomné, vyhledávače byly jednodušší, internetových stránek bylo dramaticky méně a mobilní internet byl pro většinu lidí ještě science fiction. Když jste našli stránku firmy, byli jste rádi, že vůbec existuje.",
-          "Dnes jsme na opačné straně problému. Informací není málo. Je jich příliš mnoho.",
-          "A úkolem moderního webu proto není pouze informace zveřejnit. Musí pomoci správnému člověku správnou informaci rychle najít, pochopit a něco s ní udělat."
-        ]
-      },
-      {
-        heading: "Největší změna se neodehrála v technologiích. Odehrála se v nás.",
-        paragraphs: [
-          "Ještě před patnácti lety bylo naprosto normální přijít na webovou stránku přes její homepage, otevřít menu, najít sekci „Služby“, potom „Kontakt“ a chvíli hledat, co vlastně potřebujete.",
-          "Dnes přicházíme na konkrétní podstránky z Googlu, Map, sociálních sítí, QR kódů, reklam, odkazů v komunikátorech — a stále častěji prostřednictvím odpovědi vytvořené umělou inteligencí.",
-          "Uživatel už často web neprochází. Uživatel něco potřebuje. Chce vědět, zda daná firma dělá to, co potřebuje, kolik to stojí, jestli působí v jeho městě, zda jí může věřit, jak ji kontaktovat a jestli má právě otevřeno.",
-          "Na rozhodnutí máte někdy několik sekund. Proto může být stránka technicky funkční a přesto být z pohledu roku 2026 prakticky zastaralá."
-        ]
-      },
-      {
-        heading: "Máme rok 2026. Některé firemní weby to zatím nezjistily.",
-        paragraphs: [
-          "Tohle je podle mě jeden z největších paradoxů současného internetu.",
-          "Pořízení profesionální webové prezentace nikdy nebylo tak dostupné jako dnes. Na českém trhu dnes najdete menší a střední firemní prezentace běžně v cenových hladinách kolem 20–30 tisíc korun; aktuální ceníky řady dodavatelů začínají přibližně kolem 20 tisíc a standardní firemní realizace se podle rozsahu pohybují zhruba mezi 20 a 35 tisíci.",
-          "Ve srovnání s automobilem, vybavením provozovny, reklamou nebo několika měsíci nájmu je to pro fungující podnikání často relativně malá investice.",
-          "Přesto dodnes narazíte na firmy, jejichž web vypadá, jako kdyby ho někdo v roce 2007 dokončil, slavnostně zavřel notebook a už se k němu nikdy nevrátil. Malé písmo, web, který na telefonu připomíná pohled dalekohledem, kontaktní informace schované na třetí podstránce, fotografie široké 320 pixelů, deset položek menu, „Vítejte na našich internetových stránkách“ a někdy dokonce copyright končící někde kolem roku 2014.",
-          "Nejde přitom jen o estetiku. Takový web vznikl pro způsob používání internetu, který už neexistuje."
-        ]
-      },
-      {
-        heading: "Mobil už není menší počítač",
-        paragraphs: [
-          "Kdysi vznikl web pro počítač a později se řešilo, jak ho nějak vměstnat do telefonu. Dnes je mnohem rozumnější uvažovat opačně.",
-          "Telefon není nouzová verze internetu. Pro obrovské množství lidí je to internet.",
-          "Člověk stojí na ulici, hledá instalatéra, restauraci, servis, právníka nebo kadeřnici. V jedné ruce drží telefon a nechce studovat firemní historii od roku 1993. Potřebuje odpověď.",
-          "Moderní web proto musí respektovat nejen velikost displeje, ale i kontext, ve kterém jej člověk používá. Telefonní číslo má jít stisknout, adresa otevřít v mapě, formulář nemá vyžadovat dvacet polí, text nemá být stěna, nejdůležitější informace nemají být ukryté pod třemi úrovněmi navigace a stránka se nemá deset sekund rozmýšlet, jestli se vůbec zobrazí.",
-          "Google ostatně při hodnocení uživatelské zkušenosti dlouhodobě zdůrazňuje mimo jiné dobré fungování na mobilních zařízeních, zabezpečení a rychlost stránky."
-        ]
-      },
-      {
-        heading: "A potom přišla AI. A s ní také AI slop.",
-        paragraphs: [
-          "Umělá inteligence dramaticky snížila cenu výroby digitálního obsahu. To je zároveň fantastická i děsivá zpráva.",
-          "Nikdy nebylo jednodušší vytvořit text, obrázek, článek, produktový popis nebo rovnou celý web. Výsledkem je ale také něco, čemu se začalo velmi trefně říkat AI slop.",
-          "Internet se plní obrovským množstvím generického obsahu vytvořeného hlavně proto, aby nějaký obsah existoval. Články opisují články, deset stránek vysvětluje stejnou věc téměř stejnými slovy, fotografie zachycují lidi, kteří nikdy neexistovali, a weby vznikají během odpoledne, aniž by přinášely něco nového.",
-          "AI tedy zároveň umožňuje vytvářet lepší věci rychleji a zaplavit internet digitální vatou.",
-          "A právě tady podle mě roste hodnota něčeho velmi obyčejného: autentického zdroje. Skutečné firmy, skutečného člověka, skutečné adresy, skutečných služeb, skutečných fotografií, skutečných zkušeností a webové stránky, která dokáže všechny tyto informace jasně popsat."
-        ]
-      },
-      {
-        heading: "Web už dnes nečte pouze člověk",
-        paragraphs: [
-          "Tohle je možná největší změna posledních let.",
-          "Webovou stránku dnes nevytváříme pouze pro oči návštěvníka. Čte ji prohlížeč, Google, indexovací roboti, asistivní technologie a stále častěji její obsah nějakým způsobem zpracovávají také systémy umělé inteligence.",
-          "Proto existují věci, které návštěvník na obrazovce vůbec nemusí vidět, ale pro moderní web mají význam: správná HTML struktura, smysluplné titulky, metadata, sitemap, robots.txt, canonical URL a strukturovaná data Schema.org.",
-          "Schema není nějaké magické tlačítko „optimalizovat pro ChatGPT“. Je to standardizovaný způsob, jak stroji sdělit: Tohle je firma. Tohle je její adresa. Tohle je služba. Tohle je produkt. Tohle je událost. Tohle je článek a toto je jeho autor.",
-          "Google přímo uvádí, že strukturovaná data používá k lepšímu pochopení obsahu stránky a k zobrazování rozšířených podob výsledků vyhledávání.",
-          "A vedle klasických vyhledávačů už musíme počítat také s novým druhem návštěvníka: crawlerem AI systému. Například OpenAI provozuje samostatný OAI-SearchBot určený pro dohledávání webového obsahu pro vyhledávání v ChatGPT. Provozovatel webu může prostřednictvím robots.txt rozhodovat, zda mu přístup umožní.",
-          "Tohle už není předpověď budoucnosti. Tohle je současný web."
-        ]
-      },
-      {
-        heading: "SEO nekončí. Jen už není samo.",
-        paragraphs: [
-          "Ještě poměrně nedávno zněla základní poučka jednoduše: máte web, musí vás najít Google. To pořád platí. Jen k tomu přibyla další otázka:",
-          "Rozumějí vašemu webu také systémy, které informace z webu samy vyhledávají, kombinují a předávají uživateli?",
-          "Dříve člověk zadal do Googlu například „oprava pračky Hradec Králové“ a otevřel několik výsledků. Dnes se může zeptat: „Najdi mi v Hradci někoho, kdo opravuje pračky, jezdí k zákazníkům domů a pracuje i v pátek odpoledne.“ A očekává odpověď.",
-          "Nemusí přitom začít návštěvou vašeho webu. Možná jej navštíví až ve chvíli, kdy se rozhoduje, zda vám zavolá. A možná vůbec.",
-          "To má zásadní důsledek. Web už není pouze místo, kam potřebujeme přivést člověka. Stává se také zdrojem pravdivých a dobře strukturovaných informací o firmě.",
-          "A pokud z něj stroj nedokáže jednoznačně pochopit, kdo jste, co nabízíte, kde působíte a jak vás kontaktovat, dobrovolně mu jeho práci komplikujete."
-        ]
-      },
-      {
-        heading: "Znamená to, že webové stránky umírají?",
-        paragraphs: [
-          "Ano. A ne.",
-          "Umírá určitý způsob jejich používání. Internet založený na modelu:",
-          "«vyhledávač → deset modrých odkazů → článek → odpověď»",
-          "už není jedinou cestou k informaci.",
-          "U některých obsahových webů může být tenhle posun velmi bolestivý. Pokud jediným produktem stránky byla odpověď na jednoduchou otázku, AI může tuto odpověď uživateli předat bez nutnosti stránku vůbec navštívit.",
-          "To je skutečné riziko.",
-          "Ale firemní prezentace má jiný účel. Web instalatéra neexistuje proto, aby každý měsíc vytvořil sto tisíc pageviews. Má přesvědčit zákazníka, že instalatér existuje, pracuje v jeho oblasti, nabízí službu, kterou zákazník potřebuje, působí důvěryhodně a je možné se s ním spojit.",
-          "Totéž platí pro účetní, restauraci, malý obchod, autoservis, advokátku, řemeslníka nebo lokální firmu.",
-          "AI může změnit cestu zákazníka k vám. Nemění ale potřebu mít místo, které autoritativně říká, kdo jste.",
-          "Spíš naopak."
-        ]
-      },
-      {
-        heading: "Sociální síť není vaše internetová identita",
-        paragraphs: [
-          "Další častý argument zní: „Web nepotřebuji. Mám Facebook.“ Nebo Instagram, TikTok, LinkedIn či Google Business Profile.",
-          "To všechno jsou užitečné nástroje. Ale ani jeden z nich vám nepatří.",
-          "Algoritmus se může změnit, dosah může zmizet, účet může být zablokovaný a platforma může zaniknout nebo jednoduše přestat být místem, kde se pohybují vaši zákazníci. Vzpomínka na MySpace by v tomto bodě mohla vyprávět dlouhý příběh.",
-          "Doména je naproti tomu váš vlastní kus internetového prostoru. Sociální sítě mají přivádět lidi k vaší identitě. Neměly by ji vlastnit."
-        ]
-      },
-      {
-        heading: "Moderní web nemusí být obrovský",
-        paragraphs: [
-          "Tohle je další dědictví minulosti, kterého bychom se mohli konečně zbavit.",
-          "Dobrý web není web, který má nejvíce podstránek. Instalatér nepotřebuje digitální Versailles. Potřebuje dobře postavenou prezentaci: kdo jsem, co dělám, kde to dělám, proč mi můžete věřit, kolik to přibližně stojí a jak se se mnou spojíte.",
-          "Pokud to dává smysl, mohou přibýt reference, fotografie realizací, nejčastější otázky nebo další informace. To může být několik stránek. Někdy dokonce jediná.",
-          "Rozdíl mezi dobrým a špatným webem není počet URL. Je to množství přemýšlení, které proběhlo před jejich vytvořením."
-        ]
-      },
-      {
-        heading: "Hezký web je dnes jen začátek",
-        paragraphs: [
-          "Když dnes tvořím web, nezajímá mě pouze to, jestli dobře vypadá. To je samozřejmost.",
-          "Zajímá mě, co se stane, když na něj přijde člověk, když přijde z telefonu, co z něj přečte vyhledávač, jak jeho obsah pochopí stroj, co uvidí někdo, kdo firmu vůbec nezná, jestli člověk během několika sekund zjistí, co mu nabízíte, a jestli stránka nezestárne ve chvíli, kdy ji předám.",
-          "A hlavně: jestli web skutečně řeší problém, kvůli kterému vznikl.",
-          "Protože technologie se mění. To jsem za dobu veřejného internetu viděla už několikrát. Prohlížeče se změnily, displeje se změnily, vyhledávače se změnily, zařízení se změnila a změnil se i design. Právě teď se mění způsob, jakým informace vůbec hledáme.",
-          "Jedna věc ale zůstává. Na druhém konci je pořád člověk, který něco potřebuje. A dobrý web mu má pomoci pochopit, že správnou odpověď možná nabízíte právě vy.",
-          "To je web pro 21. století.",
-          "Ne digitální leták. Ne povinná kolonka podnikání. Ale rychlý, srozumitelný a strojově čitelný bod vaší identity v prostředí, kde se člověk, Google i umělá inteligence musí shodnout na jediné věci:",
-          "kdo jste, co děláte a proč by vás měl někdo oslovit."
-        ]
-      }
-    ]
-  },
-  {
-      "category": "Politika a společnost",
-      "title": "Na internetu nikdy neříkej pravé jméno. Říkali nám lidé, kteří ho tam dnes chtějí povinně",
-      slug: "na-internetu-nikdy-nerikej-prave-jmeno",
-      "date": "28. 4. 2026",
-      "excerpt": "Devadesátky mě učily, že pravé jméno na internetu je bezpečnostní chyba. Rok 2026 z něj dělá skoro morální kvalifikaci. Někde mezi modemem a sociálními sítěmi jsme si spletli identitu s občankou.",
-      "intro": [
-          "Když jsem v devadesátých letech začínal objevovat internet, jedna z prvních věcí, kterou člověk slyšel od rodičů, učitelů a prakticky každého dospělého, byla: Nikdy nikomu na internetu neříkej svoje skutečné jméno. Nesděluj adresu ani telefon, neříkej, kde bydlíš, a pokud možno ani to, kdo přesně jsi.",
-          "Internet byl prezentován skoro jako digitální ekvivalent temné uličky, do které se po setmění nemá chodit bez dozoru. Což je při zpětném pohledu docela úsměvné. Internet devadesátých let byl totiž ve srovnání s tím dnešním skoro zelená louka s králíčky. Nebyl plný sociálních sítí mapujících naše vztahy, nebyly v něm miliardy fotografií obličejů a telefony neposílaly každých pár minut někam naši polohu. Neexistovala dnešní reklamní infrastruktura, datoví brokeři, masový phishing, deepfakes ani možnost během několika minut poskládat o člověku půl života z deseti různých databází. A neexistovaly ani maminy, které z rodinného alba vyráběly veřejný internetový archiv dětství svých potomků dávno předtím, než byli vůbec schopní vyslovit slovo souhlas.",
-          "Přesto tehdy bylo používání přezdívky považováno za naprosto normální bezpečnostní opatření. A dnes? Dnes se pravidelně objevuje přesně opačná myšlenka: Kdyby každý vystupoval na internetu pod svým občanským jménem, internet by byl lepší. To je fascinující obrat. A absolutní bullshit."
-      ],
-      "sections": [
-          {
-              "heading": "Tehdy jsme o internetu nic nevěděli. Dnes si jen myslíme, že víme.",
-              "paragraphs": [
-                  "Je fér přiznat, že naši rodiče často vůbec netušili, co internet je. Byla to nová technologie a lidé mají před novými technologiemi přirozený respekt. Proto vznikala jednoduchá pravidla: neříkej, jak se jmenuješ, nevěř cizím lidem, nedomlouvej si schůzky a nic osobního neposílej. Část těch doporučení byla přehnaná, část velmi rozumná.",
-                  "Zajímavé ale je, že dnešní běžná společnost není ve skutečnosti o tolik technologicky gramotnější. Umíme internet používat, ale to není totéž jako mu rozumět. Umíme otevřít Facebook, objednat si jídlo, natočit TikTok a napsat komentář pod článek. Většina lidí však nerozumí tomu, jak snadno lze spojovat data z různých zdrojů, jak fungují databáze, indexace a profilování nebo jak velký rozdíl může udělat jediný dobře dohledatelný identifikátor.",
-                  "A právě tahle společnost dnes říká: „Když nemáš co skrývat, proč nepoužíváš svoje pravé jméno?“ Stejně sebevědomě, jako nám před třiceti lety jiná technologicky nepoučená společnost říkala: „Hlavně tam svoje pravé jméno nikdy nepiš.“"
-              ]
-          },
-          {
-              "heading": "Přezdívka není anonymita",
-              "paragraphs": [
-                  "Tady se podle mě ztrácí jedna zásadní věc. Pseudonym není totéž jako anonymita. Člověk vystupující dlouhodobě pod stejnou internetovou přezdívkou může být na internetu mnohem lépe identifikovatelný než nějaký Jan Novák.",
-                  "Pokud někdo dvacet let používá stejné jméno, má pod ním web, fórum, GitHub, sociální sítě, články, fotografie a komentáře a komunikuje pod ním s ostatními lidmi, vzniká velmi konkrétní identita. Možná není napsaná v občanském průkazu, ale existuje. A je konzistentní.",
-                  "Naopak „Petr Svoboda“ mi sám o sobě neříká skoro nic. V Česku mohou být stovky lidí stejného jména. To, že stát před lety zapsal určitý řetězec znaků do vašeho rodného listu, z něj automaticky nedělá nejlepší možný identifikátor pro všechny situace lidského života. Internet to pochopil velmi brzy."
-              ]
-          },
-          {
-              "heading": "My jsme se nechtěli skrývat",
-              "paragraphs": [
-                  "Tohle je důležitý rozdíl mezi náhodnou přezdívkou a skutečnou internetovou identitou. My, děti prvního internetu, jsme často nechtěli být anonymní. Právě naopak. Chtěli jsme být rozpoznatelní.",
-                  "Proto nejlepší přezdívky nebyly něco jako „Jarda3857“ nebo „Mishulenka94“. Člověk si vytvořil jméno. Něco zapamatovatelného. Něco, podle čeho ho ostatní poznali na fóru, IRC, chatu, v online hře a později třeba na vlastním webu. A pokud byla přezdívka dobrá, člověk si ji hlídal, protože získávala reputaci.",
-                  "Lidé věděli, kdo jste. Pamatovali si vás. Poznávali vaše názory, humor, práci nebo způsob komunikace. To není anonymita. To je identita oddělená od občanské identity. Internet byl možná jedním z prvních prostředí, kde jsme ve velkém zjistili, že tyhle dvě věci nemusí být totožné."
-              ]
-          },
-          {
-              "heading": "Občanské jméno není morální vlastnost",
-              "paragraphs": [
-                  "Na myšlence povinných skutečných jmen mi vadí ještě jedna věc. Vytváří zvláštní dojem, že podpis občanským jménem automaticky způsobuje slušnost. Historie sociálních sítí nabízí poměrně dost materiálu dokazujícího opak.",
-                  "Lidé dokážou být vulgární, agresivní a nenávistní i pod fotografií vlastního obličeje, jménem, zaměstnavatelem a odkazem na profil své babičky. Občanské jméno není charakterová vlastnost. A přezdívka není důkaz špatného úmyslu.",
-                  "Samozřejmě existují lidé, kteří využívají anonymitu k obtěžování ostatních, podvodům nebo šíření nenávisti. Jenže řešením problému anonymity není automaticky zrušení soukromí všech ostatních. To jsou dvě různé otázky."
-              ]
-          },
-          {
-              "heading": "Někdy je pseudonym bezpečnostní vrstva",
-              "paragraphs": [
-                  "Internet totiž není izolovaný svět. To, co o sobě zveřejníme online, má důsledky offline. Znáte-li něčí celé jméno, zaměstnavatele, přibližné bydliště a fotografie, může být překvapivě jednoduché dohledat další informace.",
-                  "Proto mohou mít velmi dobrý důvod používat pseudonym například lidé veřejně diskutující citlivá témata, oběti stalkingu, aktivisté, sexuální pracovnice, LGBT lidé v nepřátelském prostředí nebo jednoduše kdokoliv, kdo nechce, aby každý jeho internetový názor byl během deseti sekund propojitelný s adresou zaměstnavatele.",
-                  "Nemusíme přitom hledat dramatické příklady. Možná prostě jen nechci, aby člověk, se kterým diskutuji o počítačích, automaticky věděl, kde pracuji. To není podezřelé. To je soukromí."
-              ]
-          },
-          {
-              "heading": "Paradox internetu 21. století",
-              "paragraphs": [
-                  "A tak jsme se dostali do zvláštního bodu. V době, kdy internet věděl o člověku téměř nic, jsme děti učili, aby mu nesdělovaly svoje jméno. Dnes, kdy lze z několika drobků informací sestavit neuvěřitelně podrobný profil člověka, začínáme skutečné jméno považovat téměř za společenskou povinnost.",
-                  "Možná jsme si z devadesátých let měli některé věci ponechat. Ne hysterický strach z každého člověka na druhé straně modemu, ale jednoduché vědomí, že soukromí není totéž jako anonymita a anonymita není totéž jako beztrestnost.",
-                  "Internetová identita může být stabilní, důvěryhodná a dlouhodobě budovaná, aniž by byla totožná s kolonkou „jméno a příjmení“ v občanském průkazu. Ostatně právě na internetu jsme to věděli dávno předtím, než jsme na to začali zapomínat.",
-                  "Někdy o člověku řekne jeho přezdívka víc než jeho skutečné jméno. Protože skutečné jméno dostal. To druhé si vybudoval."
-              ]
-          }
-      ]
-  },
-  {
-      "category": "Web a technologie",
-      "title": "Architekti českého internetu. Kdo postavil web, na kterém jsme vyrostli",
-      slug: "architekti-ceskeho-internetu",
-      "date": "6. 2. 2024",
-      "excerpt": "Kdo připojil Česko k internetu, postavil Seznam nebo vytvořil Nette? Známe lépe lidi, kteří internet používají, než ty, kteří nám ho postavili. A to už je docela slušný digitální trapas.",
-      "intro": [
-          "Kdybych se dnes náhodných lidí na ulici zeptal na jména několika českých influencerů, youtuberů nebo televizních bavičů, pravděpodobně bych uspěl docela rychle. Kdybych se ale zeptal, kdo připojil Československo k internetu, kdo vytvořil Seznam, kdo stojí za ČSFD nebo kdo vytvořil jeden z nejdůležitějších českých PHP frameworků, najednou by bylo podstatně větší ticho.",
-          "A přitom jsou to právě tihle lidé, jejichž práce ovlivnila způsob, jakým český internet posledních třicet let používáme. Možná je v tom jeden z nejpodivnějších paradoxů digitální doby.",
-          "Mnohem lépe známe lidi, kteří internet používají k tomu, aby byli vidět, než lidi, kteří nám ten internet postavili.",
-          "Ne proto, že by byli méně důležití. Jen jejich práce obvykle nemá obličej, vlastní merch ani slevový kód. A když se jim něco podaří, výsledkem často není virální video, ale prostě to, že všechno funguje. Což je z hlediska internetu skoro nevděčná forma geniality."
-      ],
-      "sections": [
-          {
-              "heading": "Nejdřív bylo potřeba vůbec natáhnout kabel",
-              "paragraphs": [
-                  "Český internet nezačal Facebookem, Seznamem ani modemem v dětském pokoji. Nejdříve bylo potřeba Československo vůbec připojit.",
-                  "Než se objevily weby, e-shopy, sociální sítě a influenceři, někdo musel postavit trubky, natáhnout kabely, propojit počítače a přesvědčit svět, že má smysl vytvořit síť, do které se vyplatí připojit. První architekti českého internetu nebyli lidé, které byste potkávali na titulních stranách časopisů. Byli to síťaři, technici, programátoři a akademici, kteří budovali infrastrukturu, na níž později vyrostlo všechno ostatní.",
-                  "Jednou z nejdůležitějších osobností této části příběhu je Jan Gruntorád. Právě tým vedený Gruntorádem stál u experimentálního internetového spojení ČVUT s rakouským Lincem a 13. února 1992 také u oficiálního zahájení internetového připojení Československa. Později byl Gruntorád jedním z hlavních lidí kolem vzniku akademické sítě CESNET.",
-                  "Tohle není vytvoření nějaké úspěšné webové stránky. Tohle je mnohem základnější úroveň. Nejdřív totiž někdo musí postavit silnici. Teprve potom po ní mohou začít jezdit auta.",
-                  "A teprve potom se může objevit někdo, kdo na ní začne prodávat trička s nápisem „nejlepší řidič“. Internetová infrastruktura je zkrátka méně fotogenická než osobní značka, ale bez ní by osobní značka mohla maximálně viset na nástěnce v hospodě."
-              ]
-          },
-          {
-              "heading": "Lidé, kteří český internet nejen používali, ale také vysvětlovali",
-              "paragraphs": [
-                  "Internet nestačilo připojit.",
-                  "Bylo také potřeba lidem vysvětlit, co to vlastně je.",
-                  "A tady přicházejí osobnosti, které se možná nevejdou do jednoduché kolonky „zakladatel úspěšné firmy“, ale bez nich by česká internetová kultura vypadala úplně jinak.",
-                  "Jedním z nich je Jiří Peterka.",
-                  "Peterka se pohyboval kolem sítí už v době, kdy se v Československu používala akademická síť EARN, zažil samotný příchod internetu na začátku devadesátých let a dlouhodobě patří mezi nejvýraznější české autory vysvětlující počítačové sítě, internet, telekomunikace, elektronické podpisy nebo později eGovernment.",
-                  "Jeho eArchiv, veřejně dostupný od roku 1996, je dnes skoro archeologickým nalezištěm českého internetu. Uchovává články, přednášky a vysvětlení technologií z doby, kdy většině společnosti nebylo potřeba vysvětlovat, jestli má kliknout na Wi-Fi nebo mobilní data. Bylo potřeba vysvětlit, co je to Internet.",
-                  "A právě Peterka je důležitý ještě z jednoho důvodu.",
-                  "Patří mezi lidi, kteří si včas uvědomili, že digitální historie mizí strašně rychle. Weby se přepisují, firmy zanikají, URL přestávají fungovat a věci, které jednu dobu považujeme za naprostou samozřejmost, mohou být o deset let později téměř nedohledatelné.",
-                  "Dnes archivujeme fotografie oběda na Instagramu.",
-                  "Peterka archivoval vznik českého internetu."
-              ]
-          },
-          {
-              "heading": "Patrick Zandl a internet, který začal mít vlastní média",
-              "paragraphs": [
-                  "Podobně důležitým jménem je Patrick Zandl.",
-                  "V polovině devadesátých let stál u vzniku Mobil.cz, jednoho z prvních českých systematicky aktualizovaných internetových technologických médií. Projekt vznikal v době, kdy získat vlastní doménu nebylo několik kliknutí a kdy provozovat úspěšný internetový magazín nebyla normální podnikatelská disciplína, ale dost divoký experiment.",
-                  "Mobil.cz později vyrostl do skupiny technologických serverů a stal se součástí MAFRY.",
-                  "Zandl se tím ale do českého internetu nezapsal jen jako podnikatel.",
-                  "Dlouhodobě o technologiích psal, blogoval, vedl Lupu a dokonce začal sepisovat Historii českého Internetu. Patří tedy do zvláštní skupiny lidí, kteří nejen pomáhali digitální prostředí vytvářet, ale zároveň si uvědomovali, že by bylo dobré zaznamenat, jak vlastně vznikalo.",
-                  "To dnes zní samozřejmě.",
-                  "Ale v devadesátých letech nikdo moc nevěděl, že jednou budou historici hledat screenshot toho, jak vypadal nějaký server v roce 1997.",
-                  "Všichni měli totiž příliš mnoho práce s tím, aby ho vůbec udrželi online."
-              ]
-          },
-          {
-              "heading": "Český internet dostal domovskou stránku",
-              "paragraphs": [
-                  "Pak přichází generace lidí, kteří začali budovat to, co už běžný člověk skutečně vnímal jako „internet“. Asi nejvýraznější českou postavou je Ivo Lukačovič.",
-                  "V roce 1996 založil Seznam.cz jako jednoduchý katalog internetových stránek. Postupně z něj vznikl vyhledávač, e-mail, mapy, zpravodajství a celý ekosystém služeb. Seznam v roce 2026 oslavil třicet let a Lukačovič zůstává jeho vlastníkem.",
-                  "Pro jednu generaci Čechů byl Seznam prakticky vstupní branou na internet. Ale Lukačovičův příběh Seznamem nekončí. Později vytvořil také Windy.com, globální meteorologickou službu zobrazující počasí, vítr a meteorologické modely nad interaktivní mapou. Windy sám Lukačovič uvádí mezi projekty, které založil, a dodnes se na jeho vývoji osobně podílí.",
-                  "To je na jeho příběhu možná zajímavější než samotné podnikatelské jmění. Člověk, který pomáhal definovat český internet devadesátých let, později vytvořil internetovou službu používanou po celém světě.",
-                  "A přesto se o něm nemluví každý den v podcastu o osobním růstu. Možná proto, že „postavil vyhledávač a globální meteorologickou službu“ se hůř vejde do motivačního reelsu než „vstávej v pět a věř svému snu“."
-              ]
-          },
-          {
-              "heading": "A pak je tu Pavel Zima. Protože ani Seznam nepostavil jeden člověk.",
-              "paragraphs": [
-                  "Příběhy technologických firem máme rádi jednoduché.",
-                  "Zakladatel dostane nápad.",
-                  "Napíše pár řádků kódu.",
-                  "A jednoho dne má miliardovou firmu.",
-                  "Realita je pochopitelně mnohem méně filmová.",
-                  "Jedním z lidí, bez kterých by příběh Seznamu nebyl úplný, je Pavel Zima. Do firmy přišel už v roce 1997 a patřil mezi nejbližší spolupracovníky Iva Lukačoviče. Později vedl technické zázemí a vývoj Seznamu jako technický ředitel a v roce 2006 se stal výkonným ředitelem společnosti.",
-                  "A přesně proto ho má smysl připomínat.",
-                  "Seznam totiž nebyl jen dobrý nápad a značka.",
-                  "Byly to servery, infrastruktura, databáze, vývoj, provoz a postupné zvládání stále většího množství uživatelů v době, kdy nešlo jednoduše kliknout na tlačítko „přidej dalších deset cloudových instancí“.",
-                  "Za ikonou, na kterou klikaly miliony lidí, byla spousta technické práce, kterou nikdo z těch milionů nikdy neviděl.",
-                  "Což je vlastně dokonalá ukázka celého tohoto článku."
-              ]
-          },
-          {
-              "heading": "Martin Pomothy a web, který zná skoro každý Čech",
-              "paragraphs": [
-                  "Pak existují projekty, které jsou tak samozřejmou součástí internetu, že skoro zapomeneme, že je někdo musel vytvořit. Jedním z nich je ČSFD.",
-                  "Její zakladatel Martin Pomothy spustil Česko-Slovenskou filmovou databázi v roce 2001. Původně šlo o malý komunitní projekt pro filmové fanoušky. Postupně z něj vznikla rozsáhlá databáze a sociální platforma kolem filmu.",
-                  "Tohle je podle mě krásný příklad českého internetu. Nikdo nemusel čekat, až ze Silicon Valley přijde služba přeložená do češtiny. Někdo si prostě řekl: Takovou věc bych chtěl používat. Tak ji vytvořím. A o dvě desetiletí později působí její existence skoro samozřejmě.",
-                  "ČSFD se stala tak běžnou součástí rozhodování, co večer sledovat, že její hodnocení někdy funguje jako kulturní kompas, jindy jako kolektivní soudní tribunál. Film má dvě hodiny, ale uživatelé mu dokážou během třiceti sekund vysvětlit, proč je odpad."
-              ]
-          },
-          {
-              "heading": "Než jsme začali objednávat všechno, musel někdo postavit první obchody",
-              "paragraphs": [
-                  "Podobný význam měl pro českou e-commerce Ondřej Fryc. V roce 2000 spoluzaložil projekt Bílézboží.cz, ze kterého později vznikl Mall.cz. Z malého internetového obchodu vyrostl jeden z nejvýraznějších e-commerce projektů českého internetu.",
-                  "Jenže české nakupování na internetu začínalo ještě dřív.",
-                  "Jedním z lidí, kteří u toho stáli, byl Jiří Hlavenka.",
-                  "Hlavenka založil vydavatelství Computer Press, které se výrazně podepsalo na české počítačové literatuře a odborných médiích, a stál také za Vltava.cz, jedním z úplně prvních českých internetových obchodů. Dobové i pozdější zdroje Vltavu označují dokonce za první český e-shop.",
-                  "To je důležitá součást příběhu.",
-                  "Dnes internetové nakupování považujeme za infrastrukturu skoro stejně samozřejmou jako elektřinu.",
-                  "Kliknete.",
-                  "Zaplatíte.",
-                  "Balík přijde.",
-                  "Jenže někdo musel poprvé přijít s představou, že Češi budou ochotni nakupovat zboží na obrazovce počítače, aniž by si ho předem osahali a aniž by prodavač stál dva metry od nich.",
-                  "Hlavenka navíc nebyl jen provozovatelem jednoho e-shopu. Psal odborné knihy a články, budoval Computer Press a podílel se tak zároveň na tom, jakým způsobem se o počítačích a internetu v Česku učilo a psalo.",
-                  "Fryc pak patří k další etapě, kdy z internetového obchodování přestával být experiment a začínal z něj být masový byznys.",
-                  "Dnes objednat pračku, počítač nebo televizi přes internet nepůsobí nijak převratně. Jenže někdo musel být u toho v době, kdy bylo potřeba zákazníkovi nejdřív vysvětlit, proč by vůbec měl zadat objednávku počítačem místo návštěvy obchodu.",
-                  "Technologické revoluce mají zvláštní vlastnost. Jakmile vyhrají, přestanou vypadat revolučně.",
-                  "Dnes se rozčilujeme, když kurýr přijede o deset minut později, než slíbil, a považujeme to za selhání civilizace. Na začátku přitom bylo potřeba přesvědčit lidi, že poslat peníze neznámému webu výměnou za lednici není začátek finančního podvodu."
-              ]
-          },
-          {
-              "heading": "Jeho práci možná používáte, aniž znáte jeho jméno",
-              "paragraphs": [
-                  "A pak jsou lidé ještě o patro níž. Neprovozují službu, kterou používají miliony běžných zákazníků. Vytvářejí nástroje, pomocí kterých jiní lidé ty služby stavějí.",
-                  "David Grudl začal kolem roku 2004 vytvářet PHP framework Nette. Veřejně jej představil v roce 2007 a následně vydal jako open source. Kolem Nette vznikla rozsáhlá česká vývojářská komunita a framework ovlivnil celé generace českých PHP programátorů.",
-                  "A tady vzniká skoro komický paradox. Část širší internetové veřejnosti možná zná Davida Grudla především jako výraznou osobnost českého Twitteru, dnes X. Jenže jeho podstatně hlubší stopa v českém internetu je schovaná v kódu. V aplikacích, které někdo postavil na Nette. V knihovnách. V programátorech, kteří se díky jeho článkům a přednáškám něco naučili.",
-                  "To se do algoritmického feedu fotografuje podstatně hůř než ostrý tweet.",
-                  "Framework navíc není zrovna materiál pro snadný virál. Těžko natočíte emotivní video s titulkem „Tento muž změnil způsob, jakým tisíce lidí píšou backend“. Algoritmus by se nejspíš nejdřív zeptal, jestli to není nějaký druh trestu."
-              ]
-          },
-          {
-              "heading": "Lidé, kteří učili ostatní internet stavět",
-              "paragraphs": [
-                  "Do stejné skupiny bych zařadil také Michala „Altaira“ Valáška. Dlouhé roky píše, přednáší a školí o webovém vývoji, ASP.NET, provozu aplikací a bezpečnosti. Působil jako Microsoft MVP pro ASP.NET a česká vývojářská komunita ho zná také díky dlouholetému blogování a přednáškám.",
-                  "Jeho význam není v jedné službě s obřím logem na homepage. Je v něčem obtížněji měřitelném: v předávání znalostí.",
-                  "Internet totiž nestavěli pouze lidé, kteří založili firmy. Stavěli ho také lidé, kteří napsali dokumentaci, vytvořili knihovnu, odpověděli na fóru, napsali technický článek nebo vysvětlili několika tisícům dalších programátorů, jak něco dělat správně.",
-                  "To je práce, která se špatně prodává jako osobní značka. Nikdo vám obvykle nenabídne spolupráci na základě toho, že jste v roce 2008 někomu zachránili projekt před chybou v konfiguraci. Přitom právě takové drobné zásahy často rozhodují o tom, jestli se internet rozvíjí, nebo se jen slavnostně restartuje server."
-              ]
-          },
-          {
-              "heading": "A pod tím vším jsou další vrstvy",
-              "paragraphs": [
-                  "Mohli bychom pokračovat. Třeba Ondřejem Mirtesem, autorem PHPStanu — open-source nástroje pro statickou analýzu PHP kódu, který hledá chyby ještě před spuštěním programu a používají jej vývojáři daleko za hranicemi Česka.",
-                  "Nebo lidmi jako Jiří Kosek, který už na přelomu tisíciletí psal české knihy a výukové materiály o HTML, PHP, XML, XSLT a dalších technologiích v době, kdy se velká část českých webových vývojářů teprve učila, co všechny ty zkratky znamenají.",
-                  "A za každým známým jménem by šlo najít desítky dalších. Správce sítě. Vývojáře open-source knihovny. Autora dokumentace. Člověka, který dvacet let udržoval nějaký protokol, server nebo komunitní projekt.",
-                  "Internet totiž nikdy nepostavilo pár géniů. Postavila ho obrovská vrstva lidí, jejichž nejlepší práce je často právě ta, které si nikdo nevšimne.",
-                  "Je to trochu jako s elektřinou. Všimneme si jí hlavně tehdy, když nejde. U internetu je to podobné: o infrastruktuře začneme přemýšlet ve chvíli, kdy stránka načítá déle než tři sekundy a někdo v kanceláři pronese větu „asi je problém u mě“. V tu chvíli se z neviditelných hrdinů stávají viníci, ideálně s okamžitou nápravou a bez nároku na oběd."
-              ]
-          },
-          {
-              "heading": "Proč tedy známe spíš influencery?",
-              "paragraphs": [
-                  "Protože influencer pracuje s jedinou komoditou, která je v dnešním internetu možná nejdražší: s pozorností.",
-                  "Jeho tvář je produkt. Jeho osobnost je produkt. Jeho každodenní život může být produkt. Algoritmus sociální sítě navíc nepotřebuje, abychom rozuměli tomu, jak funguje internetová infrastruktura. Potřebuje, abychom ještě deset sekund scrollovali.",
-                  "Technologická práce funguje přesně opačně. Když svou práci udělá dokonale síťař, nevšimnete si ho. Když svou práci udělá dokonale programátor frameworku, aplikace prostě funguje. Když svou práci udělá dobře člověk spravující infrastrukturu, nic se nestane.",
-                  "A „nic se nestalo“ je technologicky fantastický výsledek, ale příšerný virální obsah.",
-                  "Influencer může každý den připomenout, že existuje. Síťový administrátor může každý den zabránit tomu, aby si někdo všiml, že existuje. Jeden sbírá lajky, druhý sbírá logy. A zatímco první dostane pozvánku na panel o budoucnosti médií, druhý dostane zprávu, že někomu nejde tiskárna."
-              ]
-          },
-          {
-              "heading": "Internet má svoje Smetany. Jen o nich moc nemluvíme.",
-              "paragraphs": [
-                  "Nejde o to, že bychom neměli znát baviče. Každá generace měla svoje populární osobnosti, herce, moderátory a komiky.",
-                  "Petr Novotný byl ve své době známější široké veřejnosti než řada vědců, konstruktérů nebo lidí stojících za zásadními technologiemi. Na tom není nic překvapivého.",
-                  "Bylo by ale trochu absurdní, kdybychom historii české kultury jednou popsali hlavně prostřednictvím televizních estrád a zapomněli při tom na Smetanu, Němcovou nebo Jiráska. A něco podobného možná děláme s historií internetu právě teď.",
-                  "Pamatujeme si lidi, kteří dokázali získat naši pozornost. Mnohem méně si pamatujeme lidi, kteří vytvořili prostředí, ve kterém se o naši pozornost vůbec začalo bojovat.",
-                  "Možná proto stojí za to si jejich jména občas připomenout. Protože internet nevznikl na timeline.",
-                  "Nejdřív ho někdo musel připojit, postavit jeho trubky a kabely, naprogramovat, popsat, naučit ostatní, jak ho používat, a roky udržovat v chodu. Teprve potom na něm mohli začít vznikat influenceři.",
-                  "A možná je to tak správně. Ne každý, kdo mění svět, musí být vidět v každém druhém videu. Někteří lidé totiž nemají potřebu vysvětlovat, že něco dokázali.",
-                  "Stačí, že to funguje."
-              ]
-          }
-      ]
-  },
-  {
-    type: "external",
-    category: "Internetový folklór",
-    title: "Život s programátorem. Deset pravidel, která přežila dvacet let českého internetu",
-    slug: "zivot-s-programatorem-deset-pravidel",
-    originalTitle: "Život s programátorem – deset pravidel, jak to přežít",
-    date: "28. 7. 2022",
-    readingTime: "2 min čtení",
-    author: "Mysh",
-    sourceName: "Lživě.cz",
-    sourceUrl: "https://www.lzive.cz/clanky/2002/05/194-zivot-s-programatorem.html",
-    hideSourceCard: true,
-    excerpt: "Některé texty na internetu zestárnou. Jiné se z něj stanou. A pak existují takové, které se po letech vracejí jako malá časová kapsle.",
-    intro: [
-      "Některé texty na internetu zestárnou. Jiné se z něj stanou. A pak existují takové, které se po letech vracejí jako malá časová kapsle: pořád jsou vtipné, jen mezitím začaly vyprávět i o době, ve které vznikly.",
-      "Mysh kdysi sepsala deset pravidel, jak přežít život s programátorem. Tím programátorem byl Altair. A protože oba znám, čte se mi ten text dnes trochu jinak než jako anonymní internetový vtípek, který člověk někde našel po dvaceti letech.",
-      "Zároveň je to ale přesně ten druh textu, který svého času žil vlastním internetovým životem. Z doby, kdy se podobné věci neposílaly přes sociální sítě, ale mailem, ICQ, diskusními fóry a kopírováním z jednoho webu na druhý.",
-      "A překvapivě velká část těch programátorských stereotypů pořád funguje.",
-      "Programátor nechodí pozdě proto, že by neuměl hodiny. Jen ještě potřeboval něco dodělat. Romantický dárek může být elektronika. Výlet do přírody má zásadní nedostatek v podobě chybějícího připojení k internetu. A pokud chcete mít jistotu, že si na cestu na konferenci vezme také spodní prádlo, nejlepší je dát mu ho do tašky s notebookem.",
-      "Samozřejmě je to nadsázka. O to zajímavější ale je, že dnes celý text funguje také jako malá časová kapsle českého internetu začátku století.",
-      "Objevuje se v něm Outlook, kapesní počítače, Microsoft .NET, SQL Server, MP3 nebo linuxová komunita v podobě „davu běsnících tučňáků“. Dnes to zní skoro jako pečlivě připravené retro. Tehdy to prostě byla současnost.",
-      "A právě takhle podle mě vypadá internetový folklór.",
-      "Nejsou to jen první memy, legendární weby nebo hlášky z diskusních fór. Patří sem i texty, které si lidé posílali dál, přetiskovali je na svých stránkách a které přežily weby, na nichž se kdysi objevily.",
-      "Tenhle přežil.",
-      "Dnes ho <a href=\"https://www.lzive.cz/clanky/2002/05/194-zivot-s-programatorem.html\" target=\"_blank\" rel=\"noopener noreferrer\">najdete třeba v archivu Lživě.cz</a>. A jestli jste někdy žili s programátorem — nebo jím sami jste — doporučuju si těch deset pravidel přečíst v originále."
-    ],
-    sections: []
-  },
-  {
-    type: "external",
-    category: "Politika a společnost",
-    title: "Trvalé bydliště není to, co si většina lidí myslí, včetně úředníků",
-    slug: "trvale-bydliste-neni-to-co-si-vetsina-lidi-mysli",
-    originalTitle: "Úředně bezdomovcem po devíti letech: aktualizace článku",
-    date: "25. 11. 2020",
-    readingTime: "3 min čtení",
-    author: "Michal Altair Valášek",
-    sourceName: "Altair.blog",
-    sourceUrl: "https://www.altair.blog/2020/11/uredne-bezdomovcem",
-    hideSourceCard: true,
-    excerpt: "Jsou věci, které člověk považuje za samozřejmé hlavně proto, že mu je celý život nikdo nezpochybnil. A často to platí i pro úředníky, kteří jsou zvyklí pracovat s tím, že každý člověk nějakou adresu prostě mít musí.",
-    intro: [
-      "Altair je přesně ten typ člověka, který podobnou větu uslyší a místo pokývnutí hlavou si otevře zákon. A před lety došel k poměrně zábavnému výsledku: nemusíte.",
-      "Jeho článek <a href=\"https://www.altair.blog/2020/11/uredne-bezdomovcem\" target=\"_blank\" rel=\"noopener noreferrer\">Úředně bezdomovcem patří podle něj samotného k nejčtenějším textům na jeho blogu</a>. V roce 2020 proto vydal jeho aktualizovanou verzi a podrobně v ní rozebral, co vlastně české právo považuje za místo trvalého pobytu, co znamená mít adresu „na úřadě“ a co se stane, když trvalý pobyt na území České republiky úplně ukončíte.",
-      "A to jsou mimochodem dvě různé věci.",
-      "Pokud máte trvalý pobyt na adrese ohlašovny, pořád trvalý pobyt máte. Jen je místo vašeho bytu nebo domu vedený úřad. Vedle toho ale existuje i možnost nemít místo trvalého pobytu v České republice vůbec. Zákon jeho ukončení umožňuje a Altair popisuje i svou vlastní zkušenost s tím, jak na takovou možnost reagují systémy a úředníci. Ti jsou přitom často upřímně překvapení, protože jsou zvyklí na to, že nějakou adresu prostě mít musíte — a najednou před nimi stojí člověk, který tvrdí, že ji mít nechce a podle zákona ani nemusí.",
-      "Právě tahle část mě na tom baví nejvíc.",
-      "Ne ani tak samotná možnost být úředně bez adresy, jako střet mezi tím, co skutečně říká zákon, a tím, jak jsou navržené formuláře, databáze a procesy kolem nás.",
-      "Člověk najednou zjistí, kolik systémů není postavených podle pravidel, ale podle předpokladu, že „tohle přece dělají všichni“.",
-      "Bez trvalého pobytu přitom nepřestáváte být občanem České republiky. Situace ale přináší praktické komplikace — Altair zmiňuje například řidičský průkaz, některé volby, zdravotní pojištění nebo živnostenské oprávnění. Současně vysvětluje i řadu mýtů kolem trvalého pobytu, třeba že vám přihlášení na určité adrese dává nějaké právo k bytu. Nedává.",
-      "Je to jeden z těch textů, po kterých se na něco úplně obyčejného začnete dívat trochu jinak.",
-      "A taky pěkná ukázka toho, proč mám rád lidi, kteří na větu „to nejde“ reagují otázkou: „A kde přesně je napsáno, že to nejde?“"
-    ],
-    sections: []
-  }
-];
-
-
-function getBlogReadingMinutes(article){
-  const parts = [
-    article.title,
-    article.excerpt,
-    ...(article.intro || []),
-    ...((article.sections || []).flatMap(section => [
-      section.heading,
-      ...(section.paragraphs || [])
-    ]))
-  ];
-  const words = parts
-    .join(" ")
-    .replace(/<[^>]*>/g, " ")
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean).length;
-
-  return Math.max(1, Math.ceil(words / 200));
-}
-
+let BLOG_ARTICLES = [];
+let blogArticlesPromise = null;
 let blogListObserver = null;
+
+const BLOG_MANIFEST_URL = "/assets/data/articles.json";
+const BLOG_THEME_STORAGE_KEY = "devbybouBlogTheme";
 
 function parseBlogDate(dateString){
   const match = String(dateString).match(/^(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})$/);
@@ -1079,17 +531,75 @@ function parseBlogDate(dateString){
     const [, day, month, year] = match;
     return new Date(Number(year), Number(month) - 1, Number(day)).getTime();
   }
-
-  const monthYear = String(dateString).match(/^(leden|únor|březen|duben|květen|červen|červenec|srpen|září|říjen|listopad|prosinec)\s+(\d{4})$/i);
-  if (monthYear) {
-    const months = {
-      leden:0, únor:1, březen:2, duben:3, květen:4, červen:5,
-      červenec:6, srpen:7, září:8, říjen:9, listopad:10, prosinec:11
-    };
-    return new Date(Number(monthYear[2]), months[monthYear[1].toLowerCase()], 1).getTime();
-  }
-
   return 0;
+}
+
+function articleReadingMinutes(article){
+  return Math.max(1, Number(article?.readingMinutes) || 1);
+}
+
+function articleReadingLabel(article){
+  return article?.readingTime || `${articleReadingMinutes(article)} min čtení`;
+}
+
+async function fetchArticleRecord(entry){
+  const slug = String(entry?.slug || "").trim();
+  if (!slug) throw new Error("Article manifest entry has no slug");
+
+  const response = await fetch(`/clanek/${encodeURIComponent(slug)}/index.html`, {cache:"no-cache"});
+  if (!response.ok) throw new Error(`Article ${slug}: HTTP ${response.status}`);
+
+  const html = await response.text();
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  const title = doc.querySelector(".blog-detail-title")?.textContent?.trim() || "";
+  const category = doc.querySelector(".blog-detail-category")?.textContent?.trim() || "Bez štítku";
+  const date = doc.querySelector(".blog-detail-meta")?.textContent?.trim() || "";
+  const readingTime = doc.querySelector(".blog-reading-time")?.textContent?.trim() || "1 min čtení";
+  const readingMatch = readingTime.match(/\d+/);
+  const excerpt = doc.querySelector(".blog-detail-lead")?.textContent?.trim() ||
+    doc.querySelector('meta[name="description"]')?.getAttribute("content")?.trim() || "";
+  const body = doc.querySelector(".blog-article");
+  const sourceNote = doc.querySelector(".article-source-note");
+
+  if (!title || !body) throw new Error(`Article ${slug}: missing .blog-detail-title or .blog-article`);
+
+  return {
+    slug,
+    pinned:Boolean(entry?.pinned),
+    title,
+    category,
+    date,
+    excerpt,
+    readingTime,
+    readingMinutes:readingMatch ? Number(readingMatch[0]) : 1,
+    bodyHtml:body.outerHTML,
+    sourceNoteHtml:sourceNote ? sourceNote.outerHTML : ""
+  };
+}
+
+async function loadBlogArticles(){
+  if (BLOG_ARTICLES.length) return BLOG_ARTICLES;
+  if (blogArticlesPromise) return blogArticlesPromise;
+
+  blogArticlesPromise = (async () => {
+    const response = await fetch(BLOG_MANIFEST_URL, {cache:"no-cache"});
+    if (!response.ok) throw new Error(`Blog manifest HTTP ${response.status}`);
+    const manifest = await response.json();
+    if (!Array.isArray(manifest)) throw new Error("Blog manifest must be an array");
+
+    const results = await Promise.allSettled(manifest.map(fetchArticleRecord));
+    BLOG_ARTICLES = results
+      .filter(result => result.status === "fulfilled")
+      .map(result => result.value);
+
+    if (!BLOG_ARTICLES.length) throw new Error("No blog article could be loaded");
+    return BLOG_ARTICLES;
+  })().catch(error => {
+    blogArticlesPromise = null;
+    throw error;
+  });
+
+  return blogArticlesPromise;
 }
 
 function getSortedBlogArticles(){
@@ -1107,16 +617,14 @@ function renderBlogCard(article, index){
     <article class="blog-card${article.pinned ? " is-pinned" : ""}" data-blog-index="${index}" tabindex="0" role="button" aria-label="${article.title}">
       ${article.pinned ? `
         <span class="blog-pin" aria-label="Připnutý článek" title="Připnutý článek">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M9 3h6l-1 5 3 3v2h-4v6l-1 2-1-2v-6H7v-2l3-3-1-5Z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l-1 5 3 3v2h-4v6l-1 2-1-2v-6H7v-2l3-3-1-5Z"/></svg>
         </span>
       ` : ""}
       <span class="blog-card-topline">
         <button class="blog-category" type="button" data-blog-category="${article.category}" aria-label="Zobrazit články v kategorii ${article.category}">${article.category}</button>
         <span class="blog-meta-stack">
           <span class="blog-card-date">${article.date}</span>
-          <span class="blog-reading-time">${article.type === "external" ? (article.readingTime || "1 min čtení") : `${getBlogReadingMinutes(article)} min čtení`}</span>
+          <span class="blog-reading-time">${articleReadingLabel(article)}</span>
         </span>
       </span>
       <h3>${article.title}</h3>
@@ -1126,7 +634,7 @@ function renderBlogCard(article, index){
   `;
 }
 
-function renderBlogList(categoryFilter = null){
+async function renderBlogList(categoryFilter = null){
   const view = document.getElementById("blogView");
   if (!view) return;
 
@@ -1135,28 +643,26 @@ function renderBlogList(categoryFilter = null){
     blogListObserver = null;
   }
 
+  if (!BLOG_ARTICLES.length) {
+    view.innerHTML = `<div class="blog-list-end">NAČÍTÁM ČLÁNKY…</div>`;
+  }
+
+  try {
+    await loadBlogArticles();
+  } catch (error) {
+    view.innerHTML = `<div class="blog-list-end">ČLÁNKY SE NEPODAŘILO NAČÍST</div>`;
+    console.error(error);
+    return;
+  }
+
   const batchSize = 5;
   const sortedArticles = getSortedBlogArticles()
     .filter(({article}) => !categoryFilter || article.category === categoryFilter);
 
-  const filteredReadingMinutes = sortedArticles.reduce((sum, {article}) => {
-    if (article.type === "external") {
-      const match = String(article.readingTime || "").match(/\d+/);
-      return sum + (match ? Number(match[0]) : 1);
-    }
-    return sum + getBlogReadingMinutes(article);
-  }, 0);
-
-  let visibleCount = Math.min(batchSize, sortedArticles.length);
-
+  const filteredReadingMinutes = sortedArticles.reduce((sum, {article}) => sum + articleReadingMinutes(article), 0);
   const allCategoriesCount = new Set(BLOG_ARTICLES.map(article => article.category)).size;
-  const allReadingMinutes = BLOG_ARTICLES.reduce((sum, article) => {
-    if (article.type === "external") {
-      const match = String(article.readingTime || "").match(/\d+/);
-      return sum + (match ? Number(match[0]) : 1);
-    }
-    return sum + getBlogReadingMinutes(article);
-  }, 0);
+  const allReadingMinutes = BLOG_ARTICLES.reduce((sum, article) => sum + articleReadingMinutes(article), 0);
+  let visibleCount = Math.min(batchSize, sortedArticles.length);
 
   view.innerHTML = `
     ${categoryFilter ? `
@@ -1179,14 +685,11 @@ function renderBlogList(categoryFilter = null){
   const sentinel = view.querySelector("#blogListSentinel");
   const end = view.querySelector("#blogListEnd");
 
-  view.querySelector("[data-blog-filter-back]")?.addEventListener("click", () => {
-    renderBlogList();
-  });
+  view.querySelector("[data-blog-filter-back]")?.addEventListener("click", () => renderBlogList());
 
   function bindBlogCards(){
     list.querySelectorAll("[data-blog-index]:not([data-bound])").forEach(card => {
       card.dataset.bound = "1";
-
       const openArticle = () => renderBlogArticle(Number(card.dataset.blogIndex));
       card.addEventListener("click", openArticle);
       card.addEventListener("keydown", event => {
@@ -1196,7 +699,6 @@ function renderBlogList(categoryFilter = null){
           openArticle();
         }
       });
-
       card.querySelector("[data-blog-category]")?.addEventListener("click", event => {
         event.stopPropagation();
         renderBlogList(event.currentTarget.dataset.blogCategory);
@@ -1209,9 +711,7 @@ function renderBlogList(categoryFilter = null){
       .slice(0, visibleCount)
       .map(({article, originalIndex}) => renderBlogCard(article, originalIndex))
       .join("");
-
     bindBlogCards();
-
     const finished = visibleCount >= sortedArticles.length;
     sentinel.hidden = finished;
     end.hidden = !finished;
@@ -1221,80 +721,54 @@ function renderBlogList(categoryFilter = null){
 
   if (visibleCount < sortedArticles.length) {
     const scroller = infoSheet.querySelector(".info-sheet-card");
-
     blogListObserver = new IntersectionObserver((entries) => {
       if (!entries.some(entry => entry.isIntersecting)) return;
-
       visibleCount = Math.min(visibleCount + batchSize, sortedArticles.length);
       paint();
-
       if (visibleCount >= sortedArticles.length && blogListObserver) {
         blogListObserver.disconnect();
         blogListObserver = null;
       }
-    }, {
-      root: scroller || null,
-      rootMargin: "0px 0px 240px 0px",
-      threshold: 0.01
-    });
-
+    }, {root:scroller || null, rootMargin:"0px 0px 240px 0px", threshold:0.01});
     blogListObserver.observe(sentinel);
   }
 }
 
-
-const BLOG_THEME_STORAGE_KEY = "devbybouBlogTheme";
-
 function getSavedBlogTheme(){
-  return localStorage.getItem(BLOG_THEME_STORAGE_KEY) === "light" ? "light" : "dark";
+  try { return localStorage.getItem(BLOG_THEME_STORAGE_KEY) === "light" ? "light" : "dark"; }
+  catch (_) { return "dark"; }
 }
 
 function applyBlogTheme(theme){
   const card = infoSheet.querySelector(".info-sheet-card");
   const toggle = infoSheetContent.querySelector(".blog-theme-toggle");
   if (!card) return;
-
   const isLight = theme === "light";
   card.classList.toggle("blog-reader-light", isLight);
   card.classList.toggle("blog-reader-dark", !isLight);
-
   if (toggle) {
     toggle.classList.toggle("is-light", isLight);
     toggle.setAttribute("aria-pressed", String(isLight));
-    toggle.setAttribute(
-      "aria-label",
-      isLight ? "Přepnout článek do tmavého režimu" : "Přepnout článek do světlého režimu"
-    );
+    toggle.setAttribute("aria-label", isLight ? "Přepnout článek do tmavého režimu" : "Přepnout článek do světlého režimu");
   }
 }
 
 function clearBlogReaderTheme(){
+  window.DEVBYBOU_ARTICLE_VIEWS?.dispose?.();
   const card = infoSheet.querySelector(".info-sheet-card");
   card?.classList.remove("blog-reader-light", "blog-reader-dark");
 }
 
-
-
 function getNextBlogArticleIndex(currentIndex){
   if (BLOG_ARTICLES.length < 2) return null;
-
-  const candidates = BLOG_ARTICLES
-    .map((_, index) => index)
-    .filter(index => index !== currentIndex);
-
+  const candidates = BLOG_ARTICLES.map((_, index) => index).filter(index => index !== currentIndex);
   const seedSource = BLOG_ARTICLES[currentIndex]?.title || String(currentIndex);
   let seed = 0;
-  for (let i = 0; i < seedSource.length; i++) {
-    seed = ((seed * 31) + seedSource.charCodeAt(i)) >>> 0;
-  }
-
+  for (let i = 0; i < seedSource.length; i++) seed = ((seed * 31) + seedSource.charCodeAt(i)) >>> 0;
   return candidates[seed % candidates.length];
 }
 
-function renderBlogArticleFooter(currentIndex){
-  const nextIndex = getNextBlogArticleIndex(currentIndex);
-  const nextArticle = nextIndex === null ? null : BLOG_ARTICLES[nextIndex];
-
+function renderBlogArticleFooter(){
   return `
     <footer class="blog-article-footer">
       <div class="blog-end-divider" aria-hidden="true"></div>
@@ -1305,71 +779,50 @@ function renderBlogArticleFooter(currentIndex){
         <span class="blog-end-separator" aria-hidden="true">|</span>
         <button class="blog-end-action" type="button" data-blog-share>Sdílet článek</button>
       </div>
-
-
     </footer>
   `;
 }
 
 async function shareBlogArticle(article){
-  const shareData = {
-    title: article.title,
-    text: article.excerpt,
-    url: article.slug ? `${location.origin}/clanek/${article.slug}/` : location.href
-  };
-
+  const articleUrl = `${location.origin}/clanek/${article.slug}/`;
+  const shareData = {title:article.title, text:article.excerpt, url:articleUrl};
   if (navigator.share) {
-    try {
-      await navigator.share(shareData);
-      return;
-    } catch (error) {
-      if (error?.name === "AbortError") return;
-    }
+    try { await navigator.share(shareData); return; }
+    catch (error) { if (error?.name === "AbortError") return; }
   }
-
   try {
-    await navigator.clipboard.writeText(article.slug ? `${location.origin}/clanek/${article.slug}/` : location.href);
+    await navigator.clipboard.writeText(articleUrl);
     const button = infoSheetContent.querySelector("[data-blog-share]");
     if (button) {
       const original = button.textContent;
       button.textContent = "Odkaz zkopírován";
       setTimeout(() => { button.textContent = original; }, 1600);
     }
-  } catch (error) {
-    window.prompt("Zkopírujte odkaz na článek:", article.slug ? `${location.origin}/clanek/${article.slug}/` : location.href);
+  } catch (_) {
+    window.prompt("Zkopírujte odkaz na článek:", articleUrl);
   }
 }
 
-
-function renderExternalArticleBody(article){
-  return `
-    <div class="blog-article blog-external-article">
-      ${article.intro.map(paragraph => `<p class="blog-intro-paragraph">${paragraph}</p>`).join("")}
-      ${article.hideSourceCard ? "" : `
-        <aside class="external-source-card">
-          <span class="external-source-kicker">Původní článek</span>
-          <strong>${article.originalTitle || article.title}</strong>
-          <dl class="external-source-meta">
-            <div><dt>Autor</dt><dd>${article.author}</dd></div>
-            <div><dt>Zdroj</dt><dd>${article.sourceName}</dd></div>
-          </dl>
-          <a class="external-source-button" href="${article.sourceUrl}" target="_blank" rel="noopener noreferrer">Přečíst původní článek ↗</a>
-        </aside>
-      `}
-    </div>
-  `;
+async function renderBlogArticleBySlug(slug, options={}){
+  try { await loadBlogArticles(); }
+  catch (error) { console.error(error); return; }
+  const index = BLOG_ARTICLES.findIndex(article => article.slug === slug);
+  if (index >= 0) return renderBlogArticle(index, options);
 }
 
-function renderBlogArticle(index, {pushHistory=true} = {}){
+async function renderBlogArticle(index, {pushHistory=true} = {}){
+  try { await loadBlogArticles(); }
+  catch (error) { console.error(error); return; }
+
   const article = BLOG_ARTICLES[index];
   if (!article) return;
 
   currentBlogArticleIndex = index;
   if (pushHistory) {
     history.pushState(
-      {devbybouOverlay:true, kind:"info:blog", devbybouBlogArticle:true, articleIndex:index},
+      {devbybouOverlay:true, kind:"info:blog", devbybouBlogArticle:true, articleIndex:index, articleSlug:article.slug},
       "",
-      article.slug ? `/clanek/${article.slug}/` : location.href
+      `/clanek/${article.slug}/`
     );
   }
 
@@ -1378,65 +831,46 @@ function renderBlogArticle(index, {pushHistory=true} = {}){
       <header class="blog-detail-head">
         <div class="blog-reader-controls">
           <button class="blog-back" type="button" aria-label="Zpět na seznam článků">
-            <svg class="blog-back-icon" viewBox="0 0 32 32" aria-hidden="true">
-              <path d="M18.5 7.5 10 16l8.5 8.5"/>
-              <path d="M10.5 16H25"/>
-            </svg>
+            <svg class="blog-back-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M18.5 7.5 10 16l8.5 8.5"/><path d="M10.5 16H25"/></svg>
           </button>
           <button class="blog-theme-toggle" type="button" aria-label="Přepnout světlý režim článku" aria-pressed="false">
-            <svg class="blog-theme-icon" viewBox="0 0 32 32" aria-hidden="true">
-              <path class="blog-theme-bulb" d="M11.2 20.3c-2.1-1.5-3.4-3.9-3.4-6.6a8.2 8.2 0 0 1 16.4 0c0 2.7-1.3 5.1-3.4 6.6-1 .8-1.6 1.8-1.7 3H12.9c-.1-1.2-.7-2.2-1.7-3Z"/>
-              <path d="M12.7 26h6.6"/>
-              <path d="M13.8 29h4.4"/>
-              <path class="blog-theme-rays" d="M16 2v2.1M5.6 6.3l1.5 1.5M26.4 6.3l-1.5 1.5M3 15h2.2M29 15h-2.2"/>
-            </svg>
+            <svg class="blog-theme-icon" viewBox="0 0 32 32" aria-hidden="true"><path class="blog-theme-bulb" d="M11.2 20.3c-2.1-1.5-3.4-3.9-3.4-6.6a8.2 8.2 0 0 1 16.4 0c0 2.7-1.3 5.1-3.4 6.6-1 .8-1.6 1.8-1.7 3H12.9c-.1-1.2-.7-2.2-1.7-3Z"/><path d="M12.7 26h6.6"/><path d="M13.8 29h4.4"/><path class="blog-theme-rays" d="M16 2v2.1M5.6 6.3l1.5 1.5M26.4 6.3l-1.5 1.5M3 15h2.2M29 15h-2.2"/></svg>
           </button>
         </div>
         <div>
           <h2 class="blog-detail-title">${article.title}</h2>
           <div class="blog-detail-meta-row">
             <button class="blog-detail-category" type="button" data-blog-detail-category="${article.category}" aria-label="Zobrazit články v kategorii ${article.category}">${article.category}</button>
-            <span class="blog-meta-stack">
-              <span class="blog-detail-meta">${article.date}</span>
-              <span class="blog-reading-time">${article.type === "external" ? (article.readingTime || "1 min čtení") : `${getBlogReadingMinutes(article)} min čtení`}</span>
-            </span>
+            <span class="blog-meta-stack"><span class="blog-detail-meta">${article.date}</span><span class="blog-reading-time">${articleReadingLabel(article)}</span></span>
           </div>
         </div>
       </header>
       <p class="blog-detail-lead">${article.excerpt}</p>
-      ${article.type === "external" ? renderExternalArticleBody(article) : `
-        <div class="blog-article">
-          ${article.intro.map(paragraph => `<p class="blog-intro-paragraph">${paragraph}</p>`).join("")}
-          ${article.sections.map(section => `
-            <h3>${section.heading}</h3>
-            ${section.paragraphs.map(paragraph => `<p>${paragraph}</p>`).join("")}
-          `).join("")}
-        </div>
-      `}
-      ${renderBlogArticleFooter(index)}
+      ${article.bodyHtml}
+      ${article.sourceNoteHtml}
+      ${renderBlogArticleFooter()}
     </article>
   `;
+
   const scroller = infoSheet.querySelector(".info-sheet-card");
   scroller?.scrollTo({top:0, behavior:"smooth"});
-
   applyBlogTheme(getSavedBlogTheme());
-  if (article.slug && window.DEVBYBOU_ARTICLE_VIEWS) {
-    window.DEVBYBOU_ARTICLE_VIEWS.mount({
-      slug: article.slug,
-      articleElement: infoSheetContent.querySelector(".blog-detail"),
-      counterElement: infoSheetContent.querySelector("[data-article-view-count]")
-    });
-  }
+
+  window.DEVBYBOU_ARTICLE_VIEWS?.mount({
+    slug:article.slug,
+    articleElement:infoSheetContent.querySelector(".blog-detail"),
+    counterElement:infoSheetContent.querySelector("[data-article-view-count]")
+  });
+
   infoSheetContent.querySelector(".blog-theme-toggle")?.addEventListener("click", () => {
     const nextTheme = getSavedBlogTheme() === "light" ? "dark" : "light";
-    localStorage.setItem(BLOG_THEME_STORAGE_KEY, nextTheme);
+    try { localStorage.setItem(BLOG_THEME_STORAGE_KEY, nextTheme); } catch (_) {}
     applyBlogTheme(nextTheme);
   });
 
   infoSheetContent.querySelector(".blog-back")?.addEventListener("click", () => {
-    if (history.state?.devbybouBlogArticle) {
-      history.back();
-    } else {
+    if (history.state?.devbybouBlogArticle) history.back();
+    else {
       currentBlogArticleIndex = null;
       clearBlogReaderTheme();
       infoSheetContent.innerHTML = INFO_OVERLAYS.blog;
@@ -1458,18 +892,11 @@ function renderBlogArticle(index, {pushHistory=true} = {}){
     clearBlogReaderTheme();
     infoSheetContent.innerHTML = INFO_OVERLAYS.blog;
     renderBlogList();
-    history.replaceState(
-      {devbybouOverlay:true, kind:"info:blog"},
-      "",
-      getOverlayUrl("info:blog")
-    );
+    history.replaceState({devbybouOverlay:true, kind:"info:blog"}, "", getOverlayUrl("info:blog"));
     scroller?.scrollTo({top:0, behavior:"smooth"});
   });
 
-  infoSheetContent.querySelector("[data-blog-share]")?.addEventListener("click", () => {
-    shareBlogArticle(article);
-  });
-
+  infoSheetContent.querySelector("[data-blog-share]")?.addEventListener("click", () => shareBlogArticle(article));
 }
 
 function initReferenceInteraction(){
@@ -1553,7 +980,7 @@ function openInfoSheet(kind){
     initAboutScreenshotStack();
     infoSheetContent.querySelector("[data-about-blog-article]")?.addEventListener("click", (e) => {
       e.preventDefault();
-      renderBlogArticle(0);
+      renderBlogArticleBySlug("web-v-druhe-polovine-dvacatych-let");
     });
   }
   if(kind === "blog") renderBlogList();
