@@ -673,6 +673,14 @@ async function renderBlogList(categoryFilter = null){
     ` : `
       <div class="blog-filter-title blog-filter-title--all">
         <span class="blog-filter-stats">${BLOG_ARTICLES.length} ${BLOG_ARTICLES.length === 1 ? "článek" : (BLOG_ARTICLES.length >= 2 && BLOG_ARTICLES.length <= 4 ? "články" : "článků")} · ${allCategoriesCount} ${allCategoriesCount === 1 ? "štítek" : (allCategoriesCount >= 2 && allCategoriesCount <= 4 ? "štítky" : "štítků")} · ${allReadingMinutes} min čtení</span>
+        <a class="blog-rss-link" href="/rss.xml" type="application/rss+xml" aria-label="RSS kanál DEVBYBOU Blog" title="RSS">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="8" cy="24" r="2.8"></circle>
+            <path d="M6 14a12 12 0 0 1 12 12"></path>
+            <path d="M6 6a20 20 0 0 1 20 20"></path>
+          </svg>
+          <span>RSS</span>
+        </a>
       </div>
     `}
     <div class="blog-list" id="blogList"></div>
