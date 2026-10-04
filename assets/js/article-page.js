@@ -7,8 +7,46 @@ document.addEventListener("DOMContentLoaded", () => {
   const counter = document.querySelector("[data-article-view-count]");
   const key = "devbybouBlogTheme";
 
+  // Promo banner lives only in otherwise-empty space above the fixed footer.
+  const endFooterHost = document.querySelector("[data-article-end-footer]");
+  let fillBanner = null;
+  if (endFooterHost) {
+    fillBanner = document.createElement("a");
+    fillBanner.className = "blog-fill-banner article-fill-banner";
+    fillBanner.href = "https://hradec.info/bou";
+    fillBanner.target = "_blank";
+    fillBanner.rel = "noopener noreferrer";
+    fillBanner.setAttribute("aria-label", "Najdete mě na hradec.info/bou");
+    fillBanner.innerHTML = '<img src="/assets/images/hradec-bou-banner.png" alt="Najdete mě na hradec.info/bou">';
+    endFooterHost.insertAdjacentElement("afterend", fillBanner);
+  }
+
+  const fitFillBanner = () => {
+    if (!fillBanner) return;
+    const footer = document.getElementById("articleSiteFooter");
+    fillBanner.hidden = false;
+    fillBanner.style.height = "0px";
+
+    requestAnimationFrame(() => {
+      const footerTop = footer?.getBoundingClientRect().top ?? window.innerHeight;
+      const bannerTop = fillBanner.getBoundingClientRect().top;
+      const available = Math.floor(footerTop - bannerTop - 10);
+
+      if (available < 100) {
+        fillBanner.hidden = true;
+        fillBanner.style.height = "0px";
+        return;
+      }
+
+      fillBanner.style.height = `${Math.min(available, 430)}px`;
+    });
+  };
+
   // Shared standalone footer: the same footer is also used on /blog/.
   window.DEVBYBOU_ARTICLE_UI?.renderSiteFooter(document.getElementById("articleSiteFooter"));
+  requestAnimationFrame(fitFillBanner);
+  window.addEventListener("resize", fitFillBanner, {passive:true});
+  window.addEventListener("orientationchange", fitFillBanner, {passive:true});
 
   const applyTheme = theme => {
     const light = theme === "light";
