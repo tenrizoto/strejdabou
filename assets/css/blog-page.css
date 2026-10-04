@@ -9,7 +9,7 @@ body.blog-page {
 .blog-page-shell {
   width:100%;
   min-height:100vh;
-  padding:8px 8px 120px;
+  padding:0 8px 120px;
   box-sizing:border-box;
 }
 
@@ -24,15 +24,17 @@ body.blog-page {
 
 .blog-page-brand {
   margin:0 0 clamp(26px,4vw,42px);
+  width:100vw;
+  margin-left:calc(50% - 50vw);
+  overflow:hidden;
 }
 
 .blog-page-brand img {
   display:block;
-  width:min(100%,760px);
+  width:100%;
   height:auto;
-  aspect-ratio:1200 / 470;
-  object-fit:cover;
-  object-position:top;
+  object-fit:contain;
+  object-position:top center;
 }
 
 .blog-page .blog-intro {
@@ -59,8 +61,15 @@ body.blog-page {
     border:0;
   }
 
+  .blog-page-brand {
+    width:100vw;
+    margin-left:0;
+  }
+
   .blog-page-brand img {
     width:100%;
-    aspect-ratio:1200 / 450;
+    height:auto;
+    object-fit:contain;
+    object-position:top center;
   }
 }
