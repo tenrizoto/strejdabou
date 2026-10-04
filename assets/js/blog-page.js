@@ -96,37 +96,6 @@
     history.replaceState({}, "", `${url.pathname}${url.search}`);
   }
 
-  function fitFillBanner(banner) {
-    if (!banner) return;
-    const footer = document.getElementById("articleSiteFooter");
-
-    const apply = () => {
-      banner.hidden = false;
-      banner.style.height = "0px";
-
-      requestAnimationFrame(() => {
-        const footerTop = footer?.getBoundingClientRect().top ?? window.innerHeight;
-        const bannerTop = banner.getBoundingClientRect().top;
-        const available = Math.floor(footerTop - bannerTop - 10);
-
-        if (available < 100) {
-          banner.hidden = true;
-          banner.style.height = "0px";
-          return;
-        }
-
-        banner.style.height = `${Math.min(available, 430)}px`;
-      });
-    };
-
-    apply();
-    if (!banner.dataset.fitBound) {
-      banner.dataset.fitBound = "1";
-      window.addEventListener("resize", apply, {passive:true});
-      window.addEventListener("orientationchange", apply, {passive:true});
-    }
-  }
-
   function renderList(category=null, updateUrl=true) {
     const view = document.getElementById("blogView");
     if (!view) return;
@@ -166,15 +135,11 @@
       `}
       <div class="blog-list" id="blogList"></div>
       <div class="blog-list-sentinel" id="blogListSentinel" aria-hidden="true"></div>
-      <div class="blog-list-end" id="blogListEnd" hidden>NIC VÍC TU NENÍ</div>
-      <a class="blog-fill-banner" id="blogFillBanner" href="https://hradec.info/bou" target="_blank" rel="noopener noreferrer" aria-label="Najdete mě na hradec.info/bou" hidden>
-        <img src="/assets/images/hradec-bou-banner.png" alt="Najdete mě na hradec.info/bou">
-      </a>`;
+      <div class="blog-list-end" id="blogListEnd" hidden>NIC VÍC TU NENÍ</div>`;
 
     const list = view.querySelector("#blogList");
     const sentinel = view.querySelector("#blogListSentinel");
     const end = view.querySelector("#blogListEnd");
-    const fillBanner = view.querySelector("#blogFillBanner");
 
     view.querySelector("[data-blog-filter-back]")?.addEventListener("click", () => renderList());
 
@@ -207,10 +172,6 @@
       const finished = visible >= filtered.length;
       sentinel.hidden = finished;
       end.hidden = !finished;
-      if (fillBanner) {
-        fillBanner.hidden = !finished;
-        if (finished) requestAnimationFrame(() => fitFillBanner(fillBanner));
-      }
     };
 
     paint();
