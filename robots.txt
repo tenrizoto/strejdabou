@@ -4,4 +4,7 @@ Allow: /
 User-agent: OAI-SearchBot
 Allow: /
 
+User-agent: Google-Extended
+Allow: /
+
 Sitemap: https://www.strejdabou.cz/sitemap.xml
