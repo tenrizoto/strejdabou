@@ -1087,3 +1087,56 @@ button.benefit:focus-visible {box-shadow:inset 0 0 0 1px var(--yellow);}
 .blog-reader-light .blog-reaction-btn.is-active {
   color:#111;
 }
+
+
+/* Blog overview: RSS sits on the same line as article/tag/reading stats. */
+.blog-filter-title--all {
+  justify-content:space-between !important;
+  gap:14px !important;
+}
+.blog-filter-title--all .blog-filter-stats {
+  min-width:0 !important;
+  flex:0 1 auto !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  white-space:nowrap !important;
+}
+.blog-rss-link {
+  flex:0 0 auto;
+  margin-left:auto;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  color:var(--yellow);
+  text-decoration:none;
+  font:900 15px/1 "Barlow Condensed",Arial,sans-serif;
+  letter-spacing:.025em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.blog-rss-link svg {
+  width:20px;
+  height:20px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2.6;
+  stroke-linecap:round;
+}
+.blog-rss-link:hover,
+.blog-rss-link:focus-visible {
+  color:#fff;
+  outline:none;
+}
+@media (max-width:520px) {
+  .blog-filter-title--all {
+    gap:10px !important;
+  }
+  .blog-rss-link {
+    gap:5px;
+    font-size:14px;
+  }
+  .blog-rss-link svg {
+    width:18px;
+    height:18px;
+  }
+}
