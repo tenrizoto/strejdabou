@@ -4,7 +4,7 @@
   }[char]));
 
   const ARTICLE_SITE_FOOTER_LINKS = Object.freeze([
-    {label:"Homepage", href:"/"},
+    {label:"Home", href:"/"},
     {label:"Všechny články", href:"/blog/"},
     {label:"O mně", href:"/?detail=o-mne"}
   ]);
