@@ -4,10 +4,9 @@
   }[char]));
 
   const ARTICLE_SITE_FOOTER_LINKS = Object.freeze([
-    {label:"Domů", href:"/"},
-    {label:"Všechny články", href:"/blog/"},
-    {label:"O mně", href:"/?detail=o-mne"},
-    {label:"Ceník", href:"/?detail=cenik"}
+    {label:"Home", href:"/"},
+    {label:"Blog", href:"/blog/"},
+    {label:"O mně", href:"/?detail=o-mne"}
   ]);
 
   function renderEndFooter(host, options={}) {
