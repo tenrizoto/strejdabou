@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DEVBYBOU Blog</title>
+    <link>https://www.strejdabou.cz/blog/</link>
+    <description>Poznámky o internetu, technologiích, lidech kolem nich a věcech, které by jinak možná zůstaly jen bokem.</description>
+    <language>cs-CZ</language>
+    <atom:link href="https://www.strejdabou.cz/rss.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 01 Oct 2026 12:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Web v druhé polovině dvacátých let. Internet se nezměnil, internet se mění pořád</title>
+      <link>https://www.strejdabou.cz/clanek/web-v-druhe-polovine-dvacatych-let/</link>
+      <guid isPermaLink="true">https://www.strejdabou.cz/clanek/web-v-druhe-polovine-dvacatych-let/</guid>
+      <pubDate>Thu, 01 Oct 2026 12:00:00 GMT</pubDate>
+      <category>Web a technologie</category>
+      <description>Od vytáčeného modemu přes blikající GIFy až po AI crawlery. Internet dospěl, změnil pravidla hry a některé firemní weby pořád čekají, až jim někdo řekne, že už není rok 2007.</description>
+      <enclosure url="https://www.strejdabou.cz/assets/images/article-default-og.png" type="image/png" />
+    </item>
+    <item>
+      <title>Deset tisíc AI agentů hledalo řešení za milion dolarů. Možná jsme právě viděli budoucnost vědecké práce</title>
+      <link>https://www.strejdabou.cz/clanek/deset-tisic-ai-agentu-budoucnost-vedecke-prace/</link>
+      <guid isPermaLink="true">https://www.strejdabou.cz/clanek/deset-tisic-ai-agentu-budoucnost-vedecke-prace/</guid>
+      <pubDate>Mon, 28 Sep 2026 12:00:00 GMT</pubDate>
+      <category>Web a technologie</category>
+      <description>Matematici mají zvláštní zálibu v problémech, na které lidstvo desítky nebo stovky let nedokáže přijít. Jedním z takových případů jsou Navierovy–Stokesovy rovnice.</description>
+      <enclosure url="https://www.strejdabou.cz/assets/images/article-default-og.png" type="image/png" />
+    </item>
+    <item>
+      <title>Na internetu nikdy neříkej pravé jméno. Říkali nám lidé, kteří ho tam dnes chtějí povinně</title>
+      <link>https://www.strejdabou.cz/clanek/na-internetu-nikdy-nerikej-prave-jmeno/</link>
+      <guid isPermaLink="true">https://www.strejdabou.cz/clanek/na-internetu-nikdy-nerikej-prave-jmeno/</guid>
+      <pubDate>Tue, 28 Apr 2026 12:00:00 GMT</pubDate>
+      <category>Politika a společnost</category>
+      <description>Devadesátky mě učily, že pravé jméno na internetu je bezpečnostní chyba. Rok 2026 z něj dělá skoro morální kvalifikaci. Někde mezi modemem a sociálními sítěmi jsme si spletli identitu s občankou.</description>
+      <enclosure url="https://www.strejdabou.cz/assets/images/article-default-og.png" type="image/png" />
+    </item>
+    <item>
+      <title>Architekti českého internetu. Kdo postavil web, na kterém jsme vyrostli</title>
+      <link>https://www.strejdabou.cz/clanek/architekti-ceskeho-internetu/</link>
+      <guid isPermaLink="true">https://www.strejdabou.cz/clanek/architekti-ceskeho-internetu/</guid>
+      <pubDate>Tue, 06 Feb 2024 12:00:00 GMT</pubDate>
+      <category>Web a technologie</category>
+      <description>Kdo připojil Česko k internetu, postavil Seznam nebo vytvořil Nette? Známe lépe lidi, kteří internet používají, než ty, kteří nám ho postavili. A to už je docela slušný digitální trapas.</description>
+      <enclosure url="https://www.strejdabou.cz/assets/images/article-default-og.png" type="image/png" />
+    </item>
+    <item>
+      <title>Život s programátorem. Deset pravidel, která přežila dvacet let českého internetu</title>
+      <link>https://www.strejdabou.cz/clanek/zivot-s-programatorem-deset-pravidel/</link>
+      <guid isPermaLink="true">https://www.strejdabou.cz/clanek/zivot-s-programatorem-deset-pravidel/</guid>
+      <pubDate>Thu, 28 Jul 2022 12:00:00 GMT</pubDate>
+      <category>Internetový folklór</category>
+      <description>Některé texty na internetu zestárnou. Jiné se z něj stanou. A pak existují takové, které se po letech vracejí jako malá časová kapsle.</description>
+      <enclosure url="https://www.strejdabou.cz/assets/images/article-default-og.png" type="image/png" />
+    </item>
+    <item>
+      <title>Trvalé bydliště není to, co si většina lidí myslí, včetně úředníků</title>
+      <link>https://www.strejdabou.cz/clanek/trvale-bydliste-neni-to-co-si-vetsina-lidi-mysli/</link>
+      <guid isPermaLink="true">https://www.strejdabou.cz/clanek/trvale-bydliste-neni-to-co-si-vetsina-lidi-mysli/</guid>
+      <pubDate>Wed, 25 Nov 2020 12:00:00 GMT</pubDate>
+      <category>Politika a společnost</category>
+      <description>Jsou věci, které člověk považuje za samozřejmé hlavně proto, že mu je celý život nikdo nezpochybnil. A často to platí i pro úředníky, kteří jsou zvyklí pracovat s tím, že každý člověk nějakou adresu prostě mít musí.</description>
+      <enclosure url="https://www.strejdabou.cz/assets/images/article-default-og.png" type="image/png" />
+    </item>
+  </channel>
+</rss>
