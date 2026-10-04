@@ -13,7 +13,7 @@
         <div class="blog-end-actions">
           <button class="blog-end-action" type="button" data-blog-all>Všechny články</button>
           <span class="blog-end-separator" aria-hidden="true">|</span>
-          <button class="blog-end-action" type="button" data-blog-share>Sdílet článek</button>
+          <button class="blog-end-action" type="button" data-blog-share data-article-share>Sdílet článek</button>
         </div>
       </footer>`;
   }

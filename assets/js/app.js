@@ -787,6 +787,30 @@ async function shareBlogArticle(article){
   }
 }
 
+
+let articleCommonLoader = null;
+async function ensureArticleCommon(){
+  if (window.DEVBYBOU_ARTICLE_UI?.renderEndFooter) return;
+  if (!articleCommonLoader) {
+    articleCommonLoader = new Promise((resolve, reject) => {
+      const existing = document.querySelector('script[data-article-common-loader]');
+      if (existing) {
+        existing.addEventListener('load', resolve, {once:true});
+        existing.addEventListener('error', reject, {once:true});
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = '/assets/js/article-common.js?v=279';
+      script.defer = true;
+      script.dataset.articleCommonLoader = '1';
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+  await articleCommonLoader;
+}
+
 async function renderBlogArticleBySlug(slug, options={}){
   try { await loadBlogArticles(); }
   catch (error) { console.error(error); return; }
@@ -795,7 +819,10 @@ async function renderBlogArticleBySlug(slug, options={}){
 }
 
 async function renderBlogArticle(index, {pushHistory=true} = {}){
-  try { await loadBlogArticles(); }
+  try {
+    await loadBlogArticles();
+    await ensureArticleCommon();
+  }
   catch (error) { console.error(error); return; }
 
   const article = BLOG_ARTICLES[index];
