@@ -754,6 +754,7 @@ function applyBlogTheme(theme){
 
 function clearBlogReaderTheme(){
   window.DEVBYBOU_ARTICLE_VIEWS?.dispose?.();
+  window.DEVBYBOU_ARTICLE_REACTIONS?.dispose?.();
   const card = infoSheet.querySelector(".info-sheet-card");
   card?.classList.remove("blog-reader-light", "blog-reader-dark");
 }
@@ -848,6 +849,10 @@ async function renderBlogArticle(index, {pushHistory=true} = {}){
     slug:article.slug,
     articleElement:infoSheetContent.querySelector(".blog-detail"),
     counterElement:infoSheetContent.querySelector("[data-article-view-count]")
+  });
+  window.DEVBYBOU_ARTICLE_REACTIONS?.mount({
+    slug:article.slug,
+    rootElement:infoSheetContent
   });
 
   infoSheetContent.querySelector(".blog-theme-toggle")?.addEventListener("click", () => {

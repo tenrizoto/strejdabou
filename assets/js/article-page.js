@@ -56,4 +56,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelectorAll("[data-current-year]").forEach(el => el.textContent = new Date().getFullYear());
   window.DEVBYBOU_ARTICLE_VIEWS?.mount({slug, articleElement:article, counterElement:counter});
+  window.DEVBYBOU_ARTICLE_REACTIONS?.mount({slug, rootElement:card || document});
 });

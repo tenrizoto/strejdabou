@@ -94,4 +94,118 @@
   }
 
   window.DEVBYBOU_ARTICLE_VIEWS = {mount, dispose};
+
+  // Article reactions use the same server directory as the view counter.
+  const reactionApiUrl = () => {
+    const explicit = window.DEVBYBOU_CONFIG?.articleReactionApi;
+    if (explicit) return explicit;
+    const viewApi = apiUrl();
+    return viewApi ? viewApi.replace(/article-view\.php(?:\?.*)?$/, "article-reaction.php") : "";
+  };
+
+  let reactionCleanup = null;
+
+  async function reactionRequest(slug, reaction=null) {
+    const api = reactionApiUrl();
+    if (!api || !slug) return null;
+
+    if (!reaction) {
+      const response = await fetch(`${api}?slug=${encodeURIComponent(slug)}`, {cache:"no-store"});
+      if (!response.ok) throw new Error(`Reaction counter HTTP ${response.status}`);
+      return response.json();
+    }
+
+    const response = await fetch(api, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({slug, reaction}),
+      cache:"no-store"
+    });
+    if (!response.ok) throw new Error(`Reaction counter HTTP ${response.status}`);
+    return response.json();
+  }
+
+  function disposeReactions() {
+    if (reactionCleanup) reactionCleanup();
+    reactionCleanup = null;
+  }
+
+  function mountReactions({slug, rootElement}) {
+    disposeReactions();
+
+    const root = rootElement || document;
+    const host = root.querySelector?.("[data-article-reactions]");
+    const api = reactionApiUrl();
+    if (!slug || !host || !api) {
+      if (host) host.hidden = true;
+      return;
+    }
+
+    const likeButton = host.querySelector('[data-article-reaction="like"]');
+    const dislikeButton = host.querySelector('[data-article-reaction="dislike"]');
+    const likeCount = host.querySelector('[data-reaction-count="like"]');
+    const dislikeCount = host.querySelector('[data-reaction-count="dislike"]');
+
+    if (!likeButton || !dislikeButton || !likeCount || !dislikeCount) {
+      host.hidden = true;
+      return;
+    }
+
+    let disposed = false;
+    let busy = false;
+
+    const paint = data => {
+      if (disposed || !data?.ok) return;
+      likeCount.textContent = Number(data.likes || 0).toLocaleString("cs-CZ");
+      dislikeCount.textContent = Number(data.dislikes || 0).toLocaleString("cs-CZ");
+
+      const mine = data.userReaction || "";
+      likeButton.classList.toggle("is-active", mine === "like");
+      dislikeButton.classList.toggle("is-active", mine === "dislike");
+      likeButton.setAttribute("aria-pressed", String(mine === "like"));
+      dislikeButton.setAttribute("aria-pressed", String(mine === "dislike"));
+      host.hidden = false;
+    };
+
+    const vote = async reaction => {
+      if (busy || disposed) return;
+      busy = true;
+      host.classList.add("is-busy");
+      likeButton.disabled = true;
+      dislikeButton.disabled = true;
+      try {
+        paint(await reactionRequest(slug, reaction));
+      } catch (_) {
+        // Keep the last visible state if the backend is temporarily unavailable.
+      } finally {
+        busy = false;
+        if (!disposed) {
+          host.classList.remove("is-busy");
+          likeButton.disabled = false;
+          dislikeButton.disabled = false;
+        }
+      }
+    };
+
+    const onLike = () => vote("like");
+    const onDislike = () => vote("dislike");
+
+    likeButton.addEventListener("click", onLike);
+    dislikeButton.addEventListener("click", onDislike);
+
+    reactionCleanup = () => {
+      disposed = true;
+      likeButton.removeEventListener("click", onLike);
+      dislikeButton.removeEventListener("click", onDislike);
+    };
+
+    reactionRequest(slug).then(paint).catch(() => {
+      if (!disposed) host.hidden = true;
+    });
+  }
+
+  window.DEVBYBOU_ARTICLE_REACTIONS = {
+    mount: mountReactions,
+    dispose: disposeReactions
+  };
 })();
