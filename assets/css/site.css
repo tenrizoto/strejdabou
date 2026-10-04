@@ -1021,3 +1021,6 @@ button.benefit:focus-visible {box-shadow:inset 0 0 0 1px var(--yellow);}
 .blog-filter-title--all {margin:4px 0 18px!important;}
 .blog-filter-title--all .blog-filter-stats {margin-left:0!important;}
 .blog-view-count {margin:6px 0 0;color:#9f9f9f;font-family:"Barlow Condensed",Arial,sans-serif;font-size:14px;line-height:1;font-weight:800;letter-spacing:.025em;text-transform:uppercase;}
+/* v278: article author + read count on one two-line meta block */
+.blog-end-author .blog-view-count{display:inline!important;margin:0!important;color:#9f9f9f;font:inherit!important;letter-spacing:inherit!important;text-transform:uppercase!important;}
+.blog-end-author .blog-view-count[hidden]{display:none!important;}
