@@ -2,12 +2,25 @@
 <rss version="2.0"
      xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>DEVBYBOU Blog</title>
+    <title>DEVBYBOU</title>
     <link>https://www.strejdabou.cz/blog/</link>
     <description>Poznámky o internetu, technologiích, lidech kolem nich a věcech, které by jinak možná zůstaly jen bokem.</description>
     <language>cs-CZ</language>
-    <atom:link href="https://www.strejdabou.cz/rss.xml" rel="self" type="application/rss+xml" />
+
+    <image>
+      <url>https://www.strejdabou.cz/devbybou-favicon.png</url>
+      <title>DEVBYBOU</title>
+      <link>https://www.strejdabou.cz/blog/</link>
+    </image>
+
+    <atom:link
+      href="https://www.strejdabou.cz/rss.xml"
+      rel="self"
+      type="application/rss+xml"
+    />
+
     <lastBuildDate>Thu, 01 Oct 2026 12:00:00 GMT</lastBuildDate>
+
     <item>
       <title>Web v druhé polovině dvacátých let. Internet se nezměnil, internet se mění pořád</title>
       <link>https://www.strejdabou.cz/clanek/web-v-druhe-polovine-dvacatych-let/</link>
