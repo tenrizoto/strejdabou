@@ -31,11 +31,9 @@ body.article-page {
   max-width: none;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
   margin-top: 0;
   margin-bottom: 2rem;
-
   border-radius: 0;
 }
