@@ -25,3 +25,17 @@ body.article-page {
   .article-page-shell { padding:0 0 116px; }
   .article-page-card.info-sheet-card { width:100%; border:0; }
 }
+.blog-article-image {
+  display: block;
+  width: 100vw;
+  max-width: none;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-top: 0;
+  margin-bottom: 2rem;
+
+  border-radius: 0;
+}
