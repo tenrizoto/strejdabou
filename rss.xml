@@ -93,5 +93,14 @@
       <description>Jsou věci, které člověk považuje za samozřejmé hlavně proto, že mu je celý život nikdo nezpochybnil. A často to platí i pro úředníky, kteří jsou zvyklí pracovat s tím, že každý člověk nějakou adresu prostě mít musí.</description>
       <enclosure url="https://www.strejdabou.cz/assets/images/article-default-og.png" type="image/png" />
     </item>
+    <item>
+      <title>Blog.cz končí. Internet bude zase o něco méně blikat</title>
+      <link>https://www.strejdabou.cz/clanek/blog-cz-konci/</link>
+      <guid isPermaLink="true">https://www.strejdabou.cz/clanek/blog-cz-konci/</guid>
+      <pubDate>Sat, 01 Aug 2020 12:00:00 GMT</pubDate>
+      <category>Internetová archeologie</category>
+      <description>Blog.cz po patnácti letech končí. Jedna éra českého blogování mizí — spolu s blikajícími GIFy, třpytivými kurzory a blogísky, které internet rozhodně nešetřily.</description>
+      <enclosure url="https://www.strejdabou.cz/assets/images/article-default-og.png" type="image/png" />
+    </item>
   </channel>
 </rss>
