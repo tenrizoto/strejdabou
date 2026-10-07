@@ -7,6 +7,52 @@ document.addEventListener("DOMContentLoaded", () => {
   const counter = document.querySelector("[data-article-view-count]");
   const key = "devbybouBlogTheme";
 
+
+  const READING_WORDS_PER_MINUTE = 220;
+
+  const countReadingWords = root => {
+    if (!root) return 0;
+
+    const clone = root.cloneNode(true);
+    clone.querySelectorAll([
+      "script",
+      "style",
+      "noscript",
+      "svg",
+      "button",
+      "nav",
+      ".blog-detail-title",
+      ".blog-detail-category",
+      ".blog-detail-meta",
+      ".blog-reading-time",
+      "[data-article-share]",
+      "[data-article-view-count]",
+      "[data-article-end-footer]"
+    ].join(",")).forEach(el => el.remove());
+
+    const text = (clone.textContent || "")
+      .replace(/\u00a0/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    return text
+      ? (text.match(/[\p{L}\p{N}]+(?:[’'ʼ-][\p{L}\p{N}]+)*/gu) || []).length
+      : 0;
+  };
+
+  const readingRoot =
+    document.querySelector("[data-article-content], .blog-detail-content, .blog-detail-body, .article-content") ||
+    article;
+
+  const readingMinutes = Math.max(
+    1,
+    Math.ceil(countReadingWords(readingRoot) / READING_WORDS_PER_MINUTE)
+  );
+
+  document.querySelectorAll(".blog-reading-time").forEach(el => {
+    el.textContent = `${readingMinutes} min čtení`;
+  });
+
   // Shared standalone footer: the same footer is also used on /blog/.
   window.DEVBYBOU_ARTICLE_UI?.renderSiteFooter(document.getElementById("articleSiteFooter"));
 

@@ -8,8 +8,45 @@
     return m ? new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1])).getTime() : 0;
   };
 
+  const READING_WORDS_PER_MINUTE = 220;
+
+  const countReadingWords = root => {
+    if (!root) return 0;
+
+    const clone = root.cloneNode(true);
+    clone.querySelectorAll([
+      "script",
+      "style",
+      "noscript",
+      "svg",
+      "button",
+      "nav",
+      ".blog-detail-title",
+      ".blog-detail-category",
+      ".blog-detail-meta",
+      ".blog-reading-time",
+      "[data-article-share]",
+      "[data-article-view-count]",
+      "[data-article-end-footer]"
+    ].join(",")).forEach(el => el.remove());
+
+    const text = (clone.textContent || "")
+      .replace(/\u00a0/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    return text
+      ? (text.match(/[\p{L}\p{N}]+(?:[’'ʼ-][\p{L}\p{N}]+)*/gu) || []).length
+      : 0;
+  };
+
+  const calculateReadingMinutes = root =>
+    Math.max(1, Math.ceil(countReadingWords(root) / READING_WORDS_PER_MINUTE));
+
+  const formatReadingTime = minutes => `${minutes} min čtení`;
+
   const readingMinutes = article => Math.max(1, Number(article?.readingMinutes) || 1);
-  const readingLabel = article => article?.readingTime || `${readingMinutes(article)} min čtení`;
+  const readingLabel = article => formatReadingTime(readingMinutes(article));
 
   async function fetchArticle(entry) {
     const slug = String(entry?.slug || "").trim();
@@ -24,8 +61,11 @@
     const title = doc.querySelector(".blog-detail-title")?.textContent?.trim() || "";
     const category = doc.querySelector(".blog-detail-category")?.textContent?.trim() || "Bez štítku";
     const date = doc.querySelector(".blog-detail-meta")?.textContent?.trim() || "";
-    const readingTime = doc.querySelector(".blog-reading-time")?.textContent?.trim() || "1 min čtení";
-    const readingMatch = readingTime.match(/\d+/);
+    const articleRoot =
+      doc.querySelector("[data-article-content], .blog-detail-content, .blog-detail-body, .article-content") ||
+      doc.querySelector(".blog-detail");
+    const readingMinutes = calculateReadingMinutes(articleRoot);
+    const readingTime = formatReadingTime(readingMinutes);
     const excerpt =
       doc.querySelector(".blog-detail-lead")?.textContent?.trim() ||
       doc.querySelector('meta[name="description"]')?.content?.trim() ||
@@ -41,7 +81,7 @@
       date,
       excerpt,
       readingTime,
-      readingMinutes:readingMatch ? Number(readingMatch[0]) : 1
+      readingMinutes
     };
   }
 
