@@ -19,8 +19,17 @@
       type="application/rss+xml"
     />
 
-    <lastBuildDate>Thu, 01 Oct 2026 12:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 07 Oct 2026 12:00:00 GMT</lastBuildDate>
 
+    <item>
+      <title>Dnes EU regulace ChatGPT, zítra to bude třeba Zetor</title>
+      <link>https://www.strejdabou.cz/clanek/evropa-chatgpt-zetor/</link>
+      <guid isPermaLink="true">https://www.strejdabou.cz/clanek/evropa-chatgpt-zetor/</guid>
+      <pubDate>Wed, 07 Oct 2026 12:00:00 GMT</pubDate>
+      <category>Web a technologie</category>
+      <description>OpenAI zavádí v EU neviditelný watermark pro texty z ChatGPT a Codexu. Bouův komentář o AI Actu, používání softwaru a evropské konkurenceschopnosti.</description>
+      <enclosure url="https://www.strejdabou.cz/assets/images/article-default-og.png" type="image/png" />
+    </item>
     <item>
       <title>Web v druhé polovině dvacátých let. Internet se nezměnil, internet se mění pořád</title>
       <link>https://www.strejdabou.cz/clanek/web-v-druhe-polovine-dvacatych-let/</link>
