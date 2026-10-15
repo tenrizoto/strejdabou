@@ -19,8 +19,17 @@
       type="application/rss+xml"
     />
 
-    <lastBuildDate>Wed, 07 Oct 2026 12:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 16 Oct 2026 12:00:00 GMT</lastBuildDate>
 
+    <item>
+      <title>Rusku vypadli boti! Tedy YandexBot. Ale internet už mezitím stihl porazit trollí farmy</title>
+      <link>https://www.strejdabou.cz/clanek/rusku-vypadli-boti-yandexbot/</link>
+      <guid isPermaLink="true">https://www.strejdabou.cz/clanek/rusku-vypadli-boti-yandexbot/</guid>
+      <pubDate>Fri, 16 Oct 2026 12:00:00 GMT</pubDate>
+      <category>Web a technologie</category>
+      <description>Po výpadku Yandexu se internet radoval, že zmizeli ruští boti. Jenže grafy z velké části ukazovaly YandexBot a další crawlery vyhledávače, ne trollí farmy na sociálních sítích.</description>
+      <enclosure url="https://www.strejdabou.cz/assets/images/article-default-og.png" type="image/png" />
+    </item>
     <item>
       <title>Dnes Evropa zavádí regulaci ChatGPT, zítra to schytá třeba Zetor</title>
       <link>https://www.strejdabou.cz/clanek/evropa-chatgpt-zetor/</link>
