@@ -19,8 +19,17 @@
       type="application/rss+xml"
     />
 
-    <lastBuildDate>Fri, 16 Oct 2026 12:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 19 Oct 2026 12:00:00 GMT</lastBuildDate>
 
+    <item>
+      <title>Amerika má Claude. Čína má DeepSeek. Evropa si zatím čte pravidla a má připomínkové řízení</title>
+      <link>https://www.strejdabou.cz/clanek/amerika-ma-claude-cina-ma-deepseek-evropa-si-zatim-cte-pravidla/</link>
+      <guid isPermaLink="true">https://www.strejdabou.cz/clanek/amerika-ma-claude-cina-ma-deepseek-evropa-si-zatim-cte-pravidla/</guid>
+      <pubDate>Mon, 19 Oct 2026 12:00:00 GMT</pubDate>
+      <category>AI a technologie</category>
+      <description>Bou komentář nad Stanford AI Index Report 2026: Amerika a Čína staví významné AI modely, Evropa se dál tváří jako kontinent pravidel, metodik a velmi zodpovědného zpoždění.</description>
+      <enclosure url="https://www.strejdabou.cz/assets/images/article-default-og.png" type="image/png" />
+    </item>
     <item>
       <title>Tři dny, AI a česká náhrada Outlooku. Tohle je přesně ta část AI revoluce, která mě baví</title>
       <link>https://www.strejdabou.cz/clanek/tri-dny-ai-ceska-nahrada-outlooku/</link>
