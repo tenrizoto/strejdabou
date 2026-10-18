@@ -57,18 +57,80 @@
 }
 </script>
 
-<style>
-.blog-tag-toggle{appearance:none;border:0;background:none;color:inherit;font:inherit;padding:0;margin:0;cursor:pointer;text-decoration:none}
-.blog-tag-toggle:hover,.blog-tag-toggle:focus-visible{text-decoration:underline;text-underline-offset:.18em}
-.blog-tag-toggle .blog-tag-arrow{display:inline-block;margin-left:.18em;font-size:.78em;transition:transform .18s ease;transform-origin:center}
-.blog-tag-toggle[aria-expanded="true"] .blog-tag-arrow{transform:rotate(180deg)}
-.blog-tag-panel{display:flex;flex-wrap:wrap;gap:.45rem .55rem;margin:.75rem 0 1.1rem;max-height:0;opacity:0;overflow:hidden;transition:max-height .22s ease,opacity .18s ease,margin .22s ease}
-.blog-tag-panel.is-open{max-height:14rem;opacity:1}
-.blog-tag-chip{appearance:none;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:inherit;border-radius:999px;padding:.42rem .68rem;font:inherit;font-size:.82rem;line-height:1.1;cursor:pointer}
-.blog-tag-chip:hover,.blog-tag-chip:focus-visible,.blog-tag-chip.is-active{background:#ffd400;color:#050505;border-color:#ffd400}
-.blog-tag-chip-count{opacity:.65;margin-left:.2em}
-.blog-tag-empty{opacity:.7;font-size:.9rem}
-@media (max-width:640px){.blog-tag-panel{gap:.4rem}.blog-tag-chip{font-size:.76rem;padding:.4rem .58rem}}
+<style id="blog-tags-dropdown-v1">
+/* Rozbalovací seznam štítků v souhrnu blogu */
+.blog-tags-toggle {
+  appearance:none;
+  -webkit-appearance:none;
+  border:0;
+  background:transparent;
+  color:inherit;
+  padding:0;
+  margin:0;
+  font:inherit;
+  font-family:inherit;
+  font-size:inherit;
+  font-weight:inherit;
+  line-height:inherit;
+  letter-spacing:inherit;
+  text-transform:inherit;
+  cursor:pointer;
+  vertical-align:baseline;
+}
+.blog-tags-toggle:hover,
+.blog-tags-toggle:focus-visible {
+  color:var(--yellow);
+  outline:none;
+}
+.blog-tags-arrow {
+  display:inline-block;
+  margin-left:.12em;
+  font-size:.72em;
+  transform:translateY(-.06em);
+  transition:transform .18s ease;
+}
+.blog-tags-toggle[aria-expanded="true"] .blog-tags-arrow {
+  transform:translateY(-.06em) rotate(180deg);
+}
+.blog-tag-panel {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 10px;
+  margin:10px 0 22px;
+}
+.blog-tag-panel[hidden] { display:none !important; }
+.blog-tag-chip {
+  appearance:none;
+  -webkit-appearance:none;
+  border:1px solid rgba(255,255,255,.24);
+  border-radius:999px;
+  background:transparent;
+  color:#f5f5f3;
+  padding:8px 13px;
+  font-family:"Barlow Condensed",Arial,sans-serif;
+  font-size:14px;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:.02em;
+  cursor:pointer;
+}
+.blog-tag-chip span {
+  opacity:.55;
+  margin-left:3px;
+}
+.blog-tag-chip:hover,
+.blog-tag-chip:focus-visible,
+.blog-tag-chip.is-active {
+  border-color:var(--yellow);
+  background:var(--yellow);
+  color:#090909;
+  outline:none;
+}
+.blog-tag-chip.is-active span { opacity:.7; }
+@media (max-width:760px) {
+  .blog-tag-panel { gap:7px; margin-top:8px; }
+  .blog-tag-chip { font-size:13px; padding:8px 12px; }
+}
 </style>
 </head>
 <body class="blog-page">
@@ -86,139 +148,7 @@
 <div id="articleSiteFooter"></div>
 
 <script src="../assets/js/article-common.js" defer></script>
-<script src="../assets/js/blog-page.js" defer></script>
-<script>
-(function(){
-  const view=document.getElementById('blogView');
-  if(!view) return;
-
-  const clean=s=>(s||'').replace(/\s+/g,' ').trim();
-  const categorySelectors=[
-    '.blog-item-category','.blog-card-category','.blog-post-category','.blog-category',
-    '[data-category]','[class*="category"]'
-  ];
-
-  function findSummaryTextNode(){
-    const walker=document.createTreeWalker(view,NodeFilter.SHOW_TEXT);
-    let n;
-    while(n=walker.nextNode()){
-      if(/\d+\s*článků\s*·\s*\d+\s*štítků\s*·\s*\d+\s*min\s*čtení/i.test(clean(n.nodeValue))) return n;
-    }
-    return null;
-  }
-
-  function collectCategories(){
-    const found=[];
-    view.querySelectorAll(categorySelectors.join(',')).forEach(el=>{
-      const value=clean(el.getAttribute('data-category')||el.textContent);
-      if(!value || /článků|štítků|min čtení|rss/i.test(value)) return;
-      if(value.length>80) return;
-      found.push({name:value,el});
-    });
-    const map=new Map();
-    found.forEach(item=>{
-      if(!map.has(item.name)) map.set(item.name,[]);
-      map.get(item.name).push(item.el);
-    });
-    return map;
-  }
-
-  function articleContainerForCategory(el){
-    return el.closest('article,.blog-item,.blog-card,.blog-post,.blog-list-item,[class*="blog-item"],[class*="blog-card"],[class*="blog-post"]') || el.closest('a');
-  }
-
-  function init(){
-    if(view.dataset.tagUiReady==='1') return true;
-    const textNode=findSummaryTextNode();
-    const categories=collectCategories();
-    if(!textNode || !categories.size) return false;
-
-    const raw=clean(textNode.nodeValue);
-    const m=raw.match(/^(.*?)?(\d+)\s*článků\s*·\s*(\d+)\s*štítků\s*·\s*(\d+)\s*min\s*čtení(.*)$/i);
-    if(!m) return false;
-
-    const before=m[1]||'';
-    const articles=m[2], tags=m[3], minutes=m[4], after=m[5]||'';
-    const frag=document.createDocumentFragment();
-    if(before) frag.append(document.createTextNode(before));
-    frag.append(document.createTextNode(articles+' článků · '));
-    const btn=document.createElement('button');
-    btn.type='button';
-    btn.className='blog-tag-toggle';
-    btn.setAttribute('aria-expanded','false');
-    btn.setAttribute('aria-controls','blogTagPanel');
-    btn.innerHTML=tags+' štítků <span class="blog-tag-arrow" aria-hidden="true">▼</span>';
-    frag.append(btn);
-    frag.append(document.createTextNode(' · '+minutes+' min čtení'+after));
-    textNode.parentNode.replaceChild(frag,textNode);
-
-    const panel=document.createElement('div');
-    panel.id='blogTagPanel';
-    panel.className='blog-tag-panel';
-    panel.setAttribute('aria-label','Štítky článků');
-
-    const allBtn=document.createElement('button');
-    allBtn.type='button';
-    allBtn.className='blog-tag-chip is-active';
-    allBtn.textContent='Všechny';
-    allBtn.dataset.filter='';
-    panel.append(allBtn);
-
-    [...categories.entries()].sort((a,b)=>a[0].localeCompare(b[0],'cs')).forEach(([name,els])=>{
-      const chip=document.createElement('button');
-      chip.type='button';
-      chip.className='blog-tag-chip';
-      chip.dataset.filter=name;
-      chip.append(document.createTextNode(name));
-      const count=document.createElement('span');
-      count.className='blog-tag-chip-count';
-      count.textContent=' '+els.length;
-      chip.append(count);
-      panel.append(chip);
-    });
-
-    const summaryHost=btn.closest('div,p,section')||btn.parentElement;
-    summaryHost.insertAdjacentElement('afterend',panel);
-
-    btn.addEventListener('click',()=>{
-      const open=!panel.classList.contains('is-open');
-      panel.classList.toggle('is-open',open);
-      btn.setAttribute('aria-expanded',open?'true':'false');
-    });
-
-    const categoryToContainers=new Map();
-    categories.forEach((els,name)=>{
-      const set=new Set();
-      els.forEach(el=>{ const c=articleContainerForCategory(el); if(c) set.add(c); });
-      categoryToContainers.set(name,set);
-    });
-    const allContainers=new Set();
-    categoryToContainers.forEach(set=>set.forEach(c=>allContainers.add(c)));
-
-    panel.addEventListener('click',e=>{
-      const chip=e.target.closest('.blog-tag-chip');
-      if(!chip) return;
-      panel.querySelectorAll('.blog-tag-chip').forEach(x=>x.classList.toggle('is-active',x===chip));
-      const filter=chip.dataset.filter||'';
-      allContainers.forEach(c=>{ c.style.display=''; });
-      if(filter){
-        const allowed=categoryToContainers.get(filter)||new Set();
-        allContainers.forEach(c=>{ if(!allowed.has(c)) c.style.display='none'; });
-      }
-    });
-
-    view.dataset.tagUiReady='1';
-    return true;
-  }
-
-  if(!init()){
-    const observer=new MutationObserver(()=>{ if(init()) observer.disconnect(); });
-    observer.observe(view,{childList:true,subtree:true});
-    setTimeout(()=>observer.disconnect(),10000);
-  }
-})();
-</script>
-
+<script src="../assets/js/blog-page.js?v=tags2" defer></script>
   <a href="https://www.toplist.cz" id="toplistcz1843076" title="TOPlist"><noscript><img src="https://toplist.cz/count.asp?id=1843076&logo=text&njs=1" border="0"
 alt="TOPlist" width="88" height="31"/></noscript><script language="JavaScript">
 (function(d,e,s) {d.getElementById('toplistcz1843076').innerHTML='<img src="https://toplist.cz/count.asp?id=1843076&logo=text&http='+
