@@ -8,45 +8,20 @@
     return m ? new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1])).getTime() : 0;
   };
 
-  const READING_WORDS_PER_MINUTE = 220;
-
-  const countReadingWords = root => {
-    if (!root) return 0;
-
-    const clone = root.cloneNode(true);
-    clone.querySelectorAll([
-      "script",
-      "style",
-      "noscript",
-      "svg",
-      "button",
-      "nav",
-      ".blog-detail-title",
-      ".blog-detail-category",
-      ".blog-detail-meta",
-      ".blog-reading-time",
-      "[data-article-share]",
-      "[data-article-view-count]",
-      "[data-article-end-footer]"
-    ].join(",")).forEach(el => el.remove());
-
-    const text = (clone.textContent || "")
-      .replace(/\u00a0/g, " ")
-      .replace(/\s+/g, " ")
-      .trim();
-
-    return text
-      ? (text.match(/[\p{L}\p{N}]+(?:[’'ʼ-][\p{L}\p{N}]+)*/gu) || []).length
-      : 0;
-  };
-
-  const calculateReadingMinutes = root =>
-    Math.max(1, Math.ceil(countReadingWords(root) / READING_WORDS_PER_MINUTE));
-
-  const formatReadingTime = minutes => `${minutes} min čtení`;
-
   const readingMinutes = article => Math.max(1, Number(article?.readingMinutes) || 1);
-  const readingLabel = article => formatReadingTime(readingMinutes(article));
+  const readingLabel = article => article?.readingTime || `${readingMinutes(article)} min čtení`;
+
+  const CATEGORY_ALIASES = new Map([
+    ["Web a technologie", "Web, AI a technologie"],
+    ["AI a technologie", "Web, AI a technologie"],
+    ["Česká politika", "Politika a společnost"],
+    ["Vanlife & cestování", "Města, doprava a cestování"]
+  ]);
+
+  const normalizeCategory = value => {
+    const category = String(value || "").trim() || "Bez štítku";
+    return CATEGORY_ALIASES.get(category) || category;
+  };
 
   async function fetchArticle(entry) {
     const slug = String(entry?.slug || "").trim();
@@ -59,13 +34,10 @@
     const doc = new DOMParser().parseFromString(source, "text/html");
 
     const title = doc.querySelector(".blog-detail-title")?.textContent?.trim() || "";
-    const category = doc.querySelector(".blog-detail-category")?.textContent?.trim() || "Bez štítku";
+    const category = normalizeCategory(doc.querySelector(".blog-detail-category")?.textContent);
     const date = doc.querySelector(".blog-detail-meta")?.textContent?.trim() || "";
-    const articleRoot =
-      doc.querySelector("[data-article-content], .blog-detail-content, .blog-detail-body, .article-content") ||
-      doc.querySelector(".blog-detail");
-    const readingMinutes = calculateReadingMinutes(articleRoot);
-    const readingTime = formatReadingTime(readingMinutes);
+    const readingTime = doc.querySelector(".blog-reading-time")?.textContent?.trim() || "1 min čtení";
+    const readingMatch = readingTime.match(/\d+/);
     const excerpt =
       doc.querySelector(".blog-detail-lead")?.textContent?.trim() ||
       doc.querySelector('meta[name="description"]')?.content?.trim() ||
@@ -81,7 +53,7 @@
       date,
       excerpt,
       readingTime,
-      readingMinutes
+      readingMinutes:readingMatch ? Number(readingMatch[0]) : 1
     };
   }
 
@@ -144,12 +116,28 @@
       listObserver = null;
     }
 
+    category = category ? normalizeCategory(category) : null;
     if (updateUrl) updateFilterUrl(category);
 
     const filtered = sorted().filter(({article}) => !category || article.category === category);
     const totalMinutes = filtered.reduce((sum, {article}) => sum + readingMinutes(article), 0);
     const allMinutes = articles.reduce((sum, article) => sum + readingMinutes(article), 0);
-    const tags = new Set(articles.map(article => article.category)).size;
+
+    const categoryCounts = new Map();
+    articles.forEach(article => {
+      categoryCounts.set(article.category, (categoryCounts.get(article.category) || 0) + 1);
+    });
+    const categories = [...categoryCounts.keys()].sort((a,b) => a.localeCompare(b, "cs"));
+    const tags = categories.length;
+
+    const tagPanel = `
+      <div class="blog-tag-panel" id="blogTagPanel" hidden>
+        <button type="button" class="blog-tag-chip${category ? "" : " is-active"}" data-blog-tag="">Všechny <span>${articles.length}</span></button>
+        ${categories.map(name => `
+          <button type="button" class="blog-tag-chip${category === name ? " is-active" : ""}" data-blog-tag="${name}">${name} <span>${categoryCounts.get(name)}</span></button>
+        `).join("")}
+      </div>`;
+
     const batchSize = 5;
     let visible = Math.min(batchSize, filtered.length);
 
@@ -162,7 +150,11 @@
         </div>
       ` : `
         <div class="blog-filter-title blog-filter-title--all">
-          <span class="blog-filter-stats">${articles.length} ${articleWord(articles.length)} · ${tags} ${tagWord(tags)} · ${allMinutes} min čtení</span>
+          <span class="blog-filter-stats">
+            ${articles.length} ${articleWord(articles.length)} ·
+            <button type="button" class="blog-tags-toggle" data-blog-tags-toggle aria-expanded="false" aria-controls="blogTagPanel">${tags} ${tagWord(tags)} <span class="blog-tags-arrow" aria-hidden="true">▼</span></button>
+            · ${allMinutes} min čtení
+          </span>
           <a class="blog-rss-link" href="/rss.xml" type="application/rss+xml" aria-label="RSS kanál DEVBYBOU Blog" title="RSS">
           <svg viewBox="0 0 32 32" aria-hidden="true">
             <circle cx="8" cy="24" r="2.8"></circle>
@@ -172,6 +164,7 @@
           <span>RSS</span>
         </a>
         </div>
+        ${tagPanel}
       `}
       <div class="blog-list" id="blogList"></div>
       <div class="blog-list-sentinel" id="blogListSentinel" aria-hidden="true"></div>
@@ -182,6 +175,22 @@
     const end = view.querySelector("#blogListEnd");
 
     view.querySelector("[data-blog-filter-back]")?.addEventListener("click", () => renderList());
+
+    const tagToggle = view.querySelector("[data-blog-tags-toggle]");
+    const panel = view.querySelector("#blogTagPanel");
+    tagToggle?.addEventListener("click", () => {
+      const open = panel.hasAttribute("hidden");
+      panel.toggleAttribute("hidden", !open);
+      tagToggle.setAttribute("aria-expanded", String(open));
+    });
+
+    panel?.querySelectorAll("[data-blog-tag]").forEach(button => {
+      button.addEventListener("click", () => {
+        const tag = button.dataset.blogTag || null;
+        renderList(tag);
+        window.scrollTo({top:0, behavior:"smooth"});
+      });
+    });
 
     const bind = () => {
       list.querySelectorAll("[data-blog-slug]:not([data-bound])").forEach(card => {
