@@ -132,6 +132,46 @@
   .blog-tag-chip { font-size:13px; padding:8px 12px; }
 }
 </style>
+
+<style id="blog-subscribe-links-v1">
+.blog-subscribe-links {
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin-left:auto;
+  flex:0 0 auto;
+}
+.blog-subscribe-link {
+  box-sizing:border-box;
+  width:31px;
+  height:31px;
+  min-width:31px;
+  padding:0 !important;
+  display:inline-flex !important;
+  align-items:center;
+  justify-content:center;
+  line-height:1;
+}
+.blog-subscribe-link svg {
+  width:20px !important;
+  height:20px !important;
+  margin:0 !important;
+  display:block;
+}
+.blog-whatsapp-link svg {
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.85;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+@media (max-width:520px) {
+  .blog-subscribe-links { gap:5px; }
+  .blog-subscribe-link { width:29px; height:29px; min-width:29px; }
+  .blog-subscribe-link svg { width:19px !important; height:19px !important; }
+}
+</style>
+
 </head>
 <body class="blog-page">
 <main class="blog-page-shell">
