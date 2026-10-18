@@ -184,14 +184,26 @@
             <button type="button" class="blog-tags-toggle" data-blog-tags-toggle aria-expanded="false" aria-controls="blogTagPanel">${tags} ${tagWord(tags)} <span class="blog-tags-arrow" aria-hidden="true">▼</span></button>
             · ${allMinutes} min čtení
           </span>
-          <a class="blog-rss-link" href="/rss.xml" type="application/rss+xml" aria-label="RSS kanál DEVBYBOU Blog" title="RSS">
-          <svg viewBox="0 0 32 32" aria-hidden="true">
-            <circle cx="8" cy="24" r="2.8"></circle>
-            <path d="M6 14a12 12 0 0 1 12 12"></path>
-            <path d="M6 6a20 20 0 0 1 20 20"></path>
-          </svg>
-          <span>RSS</span>
-        </a>
+          <span class="blog-subscribe-links" aria-label="Odběr DEVBYBOU">
+            <a class="blog-rss-link blog-subscribe-link" href="/rss.xml" type="application/rss+xml" aria-label="RSS kanál DEVBYBOU Blog" title="RSS">
+              <svg viewBox="0 0 32 32" aria-hidden="true">
+                <circle cx="8" cy="24" r="2.8"></circle>
+                <path d="M6 14a12 12 0 0 1 12 12"></path>
+                <path d="M6 6a20 20 0 0 1 20 20"></path>
+              </svg>
+            </a>
+            <a class="blog-rss-link blog-subscribe-link blog-whatsapp-link"
+               href="https://whatsapp.com/channel/0029Vb8Xty71CYoUwaQhuj0o"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="Odebírat DEVBYBOU na WhatsApp"
+               title="WhatsApp kanál">
+              <svg viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M16 4.5a11 11 0 0 0-9.5 16.6L5 26.7l5.8-1.5A11 11 0 1 0 16 4.5Z"></path>
+                <path d="M11.2 10.8c.3-.6.6-.7.9-.7h.7c.2 0 .5.1.7.6l1 2.3c.1.3.1.6-.1.9l-.8 1c-.2.2-.2.4 0 .7 1 1.7 2.4 3 4.2 3.9.3.2.6.1.8-.1l1.2-1.5c.2-.3.5-.3.8-.2l2.4 1.1c.4.2.6.3.6.6 0 .3-.2 1.8-1.3 2.7-1 .9-2.3 1.2-3.8.9-1.5-.3-3.5-1-5.8-3-2.7-2.4-4.3-5.4-4.5-7.1-.2-1.6.4-2.5 1-3.1Z"></path>
+              </svg>
+            </a>
+          </span>
         </div>
         ${tagPanel}
       `}
