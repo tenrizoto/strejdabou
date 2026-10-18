@@ -36,35 +36,33 @@
     const title = doc.querySelector(".blog-detail-title")?.textContent?.trim() || "";
     const category = normalizeCategory(doc.querySelector(".blog-detail-category")?.textContent);
     const date = doc.querySelector(".blog-detail-meta")?.textContent?.trim() || "";
-    const explicitReadingTime = doc.querySelector(".blog-reading-time")?.textContent?.trim() || "";
-    const explicitReadingMatch = explicitReadingTime.match(/\d+/);
+    // Čas čtení počítáme vždy z reálného obsahu článku, ne z hodnoty ve
+    // .blog-reading-time. Ta může být ve zdrojovém HTML prázdná (dopočítává ji
+    // article-page.js až v prohlížeči) nebo může obsahovat starý fallback 1 min.
+    //
+    // Vezmeme celý .blog-detail, odstraníme hlavičku/metadatový blok a footer.
+    // Tím funguje výpočet i u starších článků, které nemají wrapper .blog-article.
+    const articleRoot = doc.querySelector(".blog-detail");
+    let bodyText = "";
+    if (articleRoot) {
+      const clone = articleRoot.cloneNode(true);
+      clone.querySelector(".blog-detail-head")?.remove();
+      clone.querySelector("[data-article-end-footer]")?.remove();
+      clone.querySelectorAll("script, style, noscript").forEach(node => node.remove());
+      bodyText = clone.textContent?.replace(/\s+/g, " ").trim() || "";
+    }
 
-    const excerpt =
-      doc.querySelector(".blog-detail-lead")?.textContent?.trim() ||
-      doc.querySelector('meta[name="description"]')?.content?.trim() ||
-      "";
-
-    // Starší články mohou mít čas čtení vyplněný přímo v HTML.
-    // Novější články ho nechávají prázdný a article-page.js ho počítá automaticky.
-    // Index načítá jen zdrojové HTML, takže se article-page.js nespustí — proto
-    // musíme stejný výpočet udělat i tady.
-    const readingSource = [
-      title,
-      excerpt,
-      doc.querySelector(".blog-article")?.textContent?.trim() || ""
-    ].join(" ").replace(/\s+/g, " ").trim();
+    const readingSource = [title, bodyText || excerpt]
+      .join(" ")
+      .replace(/\s+/g, " ")
+      .trim();
 
     const wordCount = readingSource
       ? readingSource.split(/\s+/).filter(Boolean).length
       : 0;
 
-    const autoReadingMinutes = Math.max(1, Math.ceil(wordCount / 200));
-    const resolvedReadingMinutes = explicitReadingMatch
-      ? Number(explicitReadingMatch[0])
-      : autoReadingMinutes;
-    const readingTime = explicitReadingMatch
-      ? explicitReadingTime
-      : `${resolvedReadingMinutes} min čtení`;
+    const resolvedReadingMinutes = Math.max(1, Math.ceil(wordCount / 200));
+    const readingTime = `${resolvedReadingMinutes} min čtení`;
 
     if (!title) throw new Error(`${slug}: chybí titulek`);
 
