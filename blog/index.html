@@ -133,42 +133,97 @@
 }
 </style>
 
-<style id="blog-subscribe-links-v1">
+<style id="blog-subscribe-links-v2">
 .blog-subscribe-links {
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  margin-left:auto;
-  flex:0 0 auto;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:flex-end !important;
+  gap:3px !important;
+  margin-left:auto !important;
+  flex:0 0 auto !important;
 }
+.blog-subscribe-links .blog-rss-link,
 .blog-subscribe-link {
-  box-sizing:border-box;
-  width:31px;
-  height:31px;
-  min-width:31px;
+  box-sizing:border-box !important;
+  width:34px !important;
+  height:34px !important;
+  min-width:34px !important;
+  margin:0 !important;
   padding:0 !important;
   display:inline-flex !important;
-  align-items:center;
-  justify-content:center;
-  line-height:1;
+  align-items:center !important;
+  justify-content:center !important;
+  border:0 !important;
+  border-radius:50% !important;
+  background:transparent !important;
+  color:var(--yellow) !important;
+  line-height:1 !important;
+  text-decoration:none !important;
+  transform:none !important;
+}
+.blog-subscribe-links .blog-subscribe-link:hover,
+.blog-subscribe-links .blog-subscribe-link:focus-visible {
+  background:rgba(255,230,0,.09) !important;
+  outline:none !important;
 }
 .blog-subscribe-link svg {
-  width:20px !important;
-  height:20px !important;
+  width:23px !important;
+  height:23px !important;
   margin:0 !important;
-  display:block;
+  display:block !important;
+}
+.blog-subscribe-links .blog-whatsapp-link {
+  background:var(--yellow) !important;
+  color:#090909 !important;
+  width:31px !important;
+  height:31px !important;
+  min-width:31px !important;
+  margin-left:1px !important;
+}
+.blog-subscribe-links .blog-whatsapp-link:hover,
+.blog-subscribe-links .blog-whatsapp-link:focus-visible {
+  background:#fff06a !important;
+  color:#090909 !important;
 }
 .blog-whatsapp-link svg {
-  fill:none;
-  stroke:currentColor;
-  stroke-width:1.85;
-  stroke-linecap:round;
-  stroke-linejoin:round;
+  width:21px !important;
+  height:21px !important;
+  fill:var(--yellow) !important;
+  stroke:#090909 !important;
+  stroke-width:1.9 !important;
+  stroke-linecap:round !important;
+  stroke-linejoin:round !important;
+}
+.blog-whatsapp-link .wa-bubble {
+  fill:var(--yellow) !important;
+  stroke:#090909 !important;
+  stroke-width:1.8 !important;
+}
+.blog-whatsapp-link .wa-phone {
+  fill:#090909 !important;
+  stroke:none !important;
 }
 @media (max-width:520px) {
-  .blog-subscribe-links { gap:5px; }
-  .blog-subscribe-link { width:29px; height:29px; min-width:29px; }
-  .blog-subscribe-link svg { width:19px !important; height:19px !important; }
+  .blog-subscribe-links { gap:2px !important; }
+  .blog-subscribe-links .blog-rss-link,
+  .blog-subscribe-link {
+    width:32px !important;
+    height:32px !important;
+    min-width:32px !important;
+  }
+  .blog-subscribe-link svg {
+    width:22px !important;
+    height:22px !important;
+  }
+  .blog-subscribe-links .blog-whatsapp-link {
+    width:30px !important;
+    height:30px !important;
+    min-width:30px !important;
+  }
+  .blog-whatsapp-link svg {
+    width:20px !important;
+    height:20px !important;
+  }
 }
 </style>
 
@@ -188,7 +243,7 @@
 <div id="articleSiteFooter"></div>
 
 <script src="../assets/js/article-common.js" defer></script>
-<script src="../assets/js/blog-page.js?v=tags5" defer></script>
+<script src="../assets/js/blog-page.js?v=tags7" defer></script>
   <a href="https://www.toplist.cz" id="toplistcz1843076" title="TOPlist"><noscript><img src="https://toplist.cz/count.asp?id=1843076&logo=text&njs=1" border="0"
 alt="TOPlist" width="88" height="31"/></noscript><script language="JavaScript">
 (function(d,e,s) {d.getElementById('toplistcz1843076').innerHTML='<img src="https://toplist.cz/count.asp?id=1843076&logo=text&http='+
