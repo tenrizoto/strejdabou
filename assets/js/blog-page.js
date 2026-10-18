@@ -23,6 +23,32 @@
     return CATEGORY_ALIASES.get(category) || category;
   };
 
+  function readingMinutesFromDocument(doc, title, excerpt) {
+    let bodyText = doc.querySelector(".blog-article")?.textContent?.trim() || "";
+
+    // Fallback pro starší články bez wrapperu .blog-article.
+    if (!bodyText) {
+      const articleRoot = doc.querySelector(".blog-detail");
+      if (articleRoot) {
+        const clone = articleRoot.cloneNode(true);
+        clone.querySelector(".blog-detail-head")?.remove();
+        clone.querySelector(".blog-detail-lead")?.remove();
+        clone.querySelector("[data-article-end-footer]")?.remove();
+        clone.querySelectorAll("script, style, noscript").forEach(node => node.remove());
+        bodyText = clone.textContent?.trim() || "";
+      }
+    }
+
+    const words = [title, excerpt, bodyText]
+      .join(" ")
+      .replace(/\s+/g, " ")
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean).length;
+
+    return Math.max(1, Math.ceil(words / 200));
+  }
+
   async function fetchArticle(entry) {
     const slug = String(entry?.slug || "").trim();
     if (!slug) throw new Error("Článek bez slugu");
@@ -36,35 +62,14 @@
     const title = doc.querySelector(".blog-detail-title")?.textContent?.trim() || "";
     const category = normalizeCategory(doc.querySelector(".blog-detail-category")?.textContent);
     const date = doc.querySelector(".blog-detail-meta")?.textContent?.trim() || "";
-    // Čas čtení počítáme vždy z reálného obsahu článku, ne z hodnoty ve
-    // .blog-reading-time. Ta může být ve zdrojovém HTML prázdná (dopočítává ji
-    // article-page.js až v prohlížeči) nebo může obsahovat starý fallback 1 min.
-    //
-    // Vezmeme celý .blog-detail, odstraníme hlavičku/metadatový blok a footer.
-    // Tím funguje výpočet i u starších článků, které nemají wrapper .blog-article.
-    const articleRoot = doc.querySelector(".blog-detail");
-    let bodyText = "";
-    if (articleRoot) {
-      const clone = articleRoot.cloneNode(true);
-      clone.querySelector(".blog-detail-head")?.remove();
-      clone.querySelector("[data-article-end-footer]")?.remove();
-      clone.querySelectorAll("script, style, noscript").forEach(node => node.remove());
-      bodyText = clone.textContent?.replace(/\s+/g, " ").trim() || "";
-    }
-
-    const readingSource = [title, bodyText || excerpt]
-      .join(" ")
-      .replace(/\s+/g, " ")
-      .trim();
-
-    const wordCount = readingSource
-      ? readingSource.split(/\s+/).filter(Boolean).length
-      : 0;
-
-    const resolvedReadingMinutes = Math.max(1, Math.ceil(wordCount / 200));
-    const readingTime = `${resolvedReadingMinutes} min čtení`;
+    const excerpt =
+      doc.querySelector(".blog-detail-lead")?.textContent?.trim() ||
+      doc.querySelector('meta[name="description"]')?.content?.trim() ||
+      "";
 
     if (!title) throw new Error(`${slug}: chybí titulek`);
+
+    const resolvedReadingMinutes = readingMinutesFromDocument(doc, title, excerpt);
 
     return {
       slug,
@@ -73,7 +78,7 @@
       category,
       date,
       excerpt,
-      readingTime,
+      readingTime:`${resolvedReadingMinutes} min čtení`,
       readingMinutes:resolvedReadingMinutes
     };
   }
@@ -84,6 +89,9 @@
     const manifest = await manifestResponse.json();
 
     const loaded = await Promise.allSettled(manifest.map(fetchArticle));
+    loaded.forEach((item, index) => {
+      if (item.status === "rejected") console.warn("Článek se nepodařilo načíst:", manifest[index]?.slug, item.reason);
+    });
     articles = loaded
       .filter(item => item.status === "fulfilled")
       .map(item => item.value);

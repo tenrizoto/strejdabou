@@ -7,52 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const counter = document.querySelector("[data-article-view-count]");
   const key = "devbybouBlogTheme";
 
-
-  const READING_WORDS_PER_MINUTE = 220;
-
-  const countReadingWords = root => {
-    if (!root) return 0;
-
-    const clone = root.cloneNode(true);
-    clone.querySelectorAll([
-      "script",
-      "style",
-      "noscript",
-      "svg",
-      "button",
-      "nav",
-      ".blog-detail-title",
-      ".blog-detail-category",
-      ".blog-detail-meta",
-      ".blog-reading-time",
-      "[data-article-share]",
-      "[data-article-view-count]",
-      "[data-article-end-footer]"
-    ].join(",")).forEach(el => el.remove());
-
-    const text = (clone.textContent || "")
-      .replace(/\u00a0/g, " ")
-      .replace(/\s+/g, " ")
-      .trim();
-
-    return text
-      ? (text.match(/[\p{L}\p{N}]+(?:[’'ʼ-][\p{L}\p{N}]+)*/gu) || []).length
-      : 0;
-  };
-
-  const readingRoot =
-    document.querySelector("[data-article-content], .blog-detail-content, .blog-detail-body, .article-content") ||
-    article;
-
-  const readingMinutes = Math.max(
-    1,
-    Math.ceil(countReadingWords(readingRoot) / READING_WORDS_PER_MINUTE)
-  );
-
-  document.querySelectorAll(".blog-reading-time").forEach(el => {
-    el.textContent = `${readingMinutes} min čtení`;
-  });
-
   // Shared standalone footer: the same footer is also used on /blog/.
   window.DEVBYBOU_ARTICLE_UI?.renderSiteFooter(document.getElementById("articleSiteFooter"));
 
@@ -99,6 +53,31 @@ document.addEventListener("DOMContentLoaded", () => {
       window.prompt("Zkopírujte odkaz na článek:", location.href);
     }
   });
+
+  // Jednotný automatický výpočet doby čtení pro detail i blogový index.
+  // Stejná metodika jako v blog-page.js: titulek + lead + tělo článku, 200 slov/min.
+  const titleText = document.querySelector(".blog-detail-title")?.textContent?.trim() || "";
+  const leadText = document.querySelector(".blog-detail-lead")?.textContent?.trim() || "";
+  let bodyText = document.querySelector(".blog-article")?.textContent?.trim() || "";
+
+  if (!bodyText && article) {
+    const clone = article.cloneNode(true);
+    clone.querySelector(".blog-detail-head")?.remove();
+    clone.querySelector(".blog-detail-lead")?.remove();
+    clone.querySelector("[data-article-end-footer]")?.remove();
+    clone.querySelectorAll("script, style, noscript").forEach(node => node.remove());
+    bodyText = clone.textContent?.trim() || "";
+  }
+
+  const readingWords = [titleText, leadText, bodyText]
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean).length;
+  const readingMinutes = Math.max(1, Math.ceil(readingWords / 200));
+  const readingTimeEl = document.querySelector(".blog-reading-time");
+  if (readingTimeEl) readingTimeEl.textContent = `${readingMinutes} min čtení`;
 
   document.querySelectorAll("[data-current-year]").forEach(el => el.textContent = new Date().getFullYear());
   window.DEVBYBOU_ARTICLE_VIEWS?.mount({slug, articleElement:article, counterElement:counter});
