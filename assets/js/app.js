@@ -176,11 +176,6 @@ const INFO_OVERLAYS = {
 
     </div>
   `,
-  blog: `
-    <h2>Blog</h2>
-    <p class="blog-intro">Poznámky o internetu, technologiích, lidech kolem nich a věcech, které by jinak možná zůstaly jen bokem. O tom, jak se internet měnil, co po cestě zanechal a proč není jen technologií, ale i kulturou, historií a spoustou podivností kolem.</p>
-    <div id="blogView"></div>
-  `,
   pricing: `
     <h2>Ceník</h2>
     <p class="pricing-lead">Nabídka pokrývá jednoduchou splash page, klasický firemní web, web s průběžnou péčí i e-shop na klíč. Věci mimo dohodnutý rozsah řeším zvlášť a cenu vždy potvrdím předem.</p>
@@ -409,7 +404,6 @@ const INFO_OVERLAYS = {
   `
 };
 let overlayHistoryActive = false;
-let currentBlogArticleIndex = null;
 
 // Shareable overlay URLs. The visible overlay state lives in ?detail=...
 // while the page itself remains the same static GitHub document.
@@ -423,7 +417,6 @@ const OVERLAY_DETAIL_BY_KIND = {
   "info:about": "o-mne",
   "info:references": "reference",
   "info:pricing": "cenik",
-  "info:blog": "blog",
   "package:basic": "basic",
   "package:standard": "standard",
   "package:business": "business",
@@ -490,424 +483,12 @@ function requestOverlayClose(){
     hideAllOverlays();
   }
 }
-window.addEventListener("popstate",(event)=>{
+window.addEventListener("popstate",()=>{
   if (!overlayHistoryActive) return;
-
-  // If Back moved from a blog article to the Blog overlay state,
-  // keep the overlay open and return only to the article list.
-  if (
-    currentBlogArticleIndex !== null &&
-    event.state?.devbybouOverlay &&
-    event.state?.kind === "info:blog"
-  ) {
-    currentBlogArticleIndex = null;
-    clearBlogReaderTheme();
-    infoSheetContent.innerHTML = INFO_OVERLAYS.blog;
-    renderBlogList();
-    infoSheet.classList.add("open");
-    infoSheet.setAttribute("aria-hidden","false");
-    document.body.style.overflow="hidden";
-    const scroller = infoSheet.querySelector(".info-sheet-card");
-    scroller?.scrollTo({top:0, behavior:"smooth"});
-    return;
-  }
-
-  currentBlogArticleIndex = null;
   overlayHistoryActive = false;
   hideAllOverlays();
 });
 
-
-let BLOG_ARTICLES = [];
-let blogArticlesPromise = null;
-let blogListObserver = null;
-
-const BLOG_MANIFEST_URL = "/assets/data/articles.json";
-const BLOG_THEME_STORAGE_KEY = "devbybouBlogTheme";
-
-function parseBlogDate(dateString){
-  const match = String(dateString).match(/^(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})$/);
-  if (match) {
-    const [, day, month, year] = match;
-    return new Date(Number(year), Number(month) - 1, Number(day)).getTime();
-  }
-  return 0;
-}
-
-function articleReadingMinutes(article){
-  return Math.max(1, Number(article?.readingMinutes) || 1);
-}
-
-function articleReadingLabel(article){
-  return article?.readingTime || `${articleReadingMinutes(article)} min čtení`;
-}
-
-async function fetchArticleRecord(entry){
-  const slug = String(entry?.slug || "").trim();
-  if (!slug) throw new Error("Article manifest entry has no slug");
-
-  const response = await fetch(`/clanek/${encodeURIComponent(slug)}/index.html`, {cache:"no-cache"});
-  if (!response.ok) throw new Error(`Article ${slug}: HTTP ${response.status}`);
-
-  const html = await response.text();
-  const doc = new DOMParser().parseFromString(html, "text/html");
-  const title = doc.querySelector(".blog-detail-title")?.textContent?.trim() || "";
-  const category = doc.querySelector(".blog-detail-category")?.textContent?.trim() || "Bez štítku";
-  const date = doc.querySelector(".blog-detail-meta")?.textContent?.trim() || "";
-  const readingTime = doc.querySelector(".blog-reading-time")?.textContent?.trim() || "1 min čtení";
-  const readingMatch = readingTime.match(/\d+/);
-  const excerpt = doc.querySelector(".blog-detail-lead")?.textContent?.trim() ||
-    doc.querySelector('meta[name="description"]')?.getAttribute("content")?.trim() || "";
-  const detail = doc.querySelector(".blog-detail");
-  const body = doc.querySelector(".blog-article");
-
-  if (!title || !body || !detail) throw new Error(`Article ${slug}: missing article structure`);
-
-  return {
-    slug,
-    pinned:Boolean(entry?.pinned),
-    title,
-    category,
-    date,
-    excerpt,
-    readingTime,
-    readingMinutes:readingMatch ? Number(readingMatch[0]) : 1,
-    articleHtml:detail.outerHTML
-  };
-}
-
-async function loadBlogArticles(){
-  if (BLOG_ARTICLES.length) return BLOG_ARTICLES;
-  if (blogArticlesPromise) return blogArticlesPromise;
-
-  blogArticlesPromise = (async () => {
-    const response = await fetch(BLOG_MANIFEST_URL, {cache:"no-cache"});
-    if (!response.ok) throw new Error(`Blog manifest HTTP ${response.status}`);
-    const manifest = await response.json();
-    if (!Array.isArray(manifest)) throw new Error("Blog manifest must be an array");
-
-    const results = await Promise.allSettled(manifest.map(fetchArticleRecord));
-    BLOG_ARTICLES = results
-      .filter(result => result.status === "fulfilled")
-      .map(result => result.value);
-
-    if (!BLOG_ARTICLES.length) throw new Error("No blog article could be loaded");
-    return BLOG_ARTICLES;
-  })().catch(error => {
-    blogArticlesPromise = null;
-    throw error;
-  });
-
-  return blogArticlesPromise;
-}
-
-function getSortedBlogArticles(){
-  return BLOG_ARTICLES
-    .map((article, originalIndex) => ({article, originalIndex}))
-    .sort((a, b) => {
-      const pinnedDiff = Number(Boolean(b.article.pinned)) - Number(Boolean(a.article.pinned));
-      if (pinnedDiff) return pinnedDiff;
-      return parseBlogDate(b.article.date) - parseBlogDate(a.article.date);
-    });
-}
-
-function renderBlogCard(article, index){
-  return `
-    <article class="blog-card${article.pinned ? " is-pinned" : ""}" data-blog-index="${index}" tabindex="0" role="button" aria-label="${article.title}">
-      ${article.pinned ? `
-        <span class="blog-pin" aria-label="Připnutý článek" title="Připnutý článek">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l-1 5 3 3v2h-4v6l-1 2-1-2v-6H7v-2l3-3-1-5Z"/></svg>
-        </span>
-      ` : ""}
-      <span class="blog-card-topline">
-        <button class="blog-category" type="button" data-blog-category="${article.category}" aria-label="Zobrazit články v kategorii ${article.category}">${article.category}</button>
-        <span class="blog-meta-stack">
-          <span class="blog-card-date">${article.date}</span>
-          <span class="blog-reading-time">${articleReadingLabel(article)}</span>
-        </span>
-      </span>
-      <h3>${article.title}</h3>
-      <p>${article.excerpt}</p>
-      <span class="blog-card-more">Číst článek →</span>
-    </article>
-  `;
-}
-
-async function renderBlogList(categoryFilter = null){
-  const view = document.getElementById("blogView");
-  if (!view) return;
-
-  if (blogListObserver) {
-    blogListObserver.disconnect();
-    blogListObserver = null;
-  }
-
-  if (!BLOG_ARTICLES.length) {
-    view.innerHTML = `<div class="blog-list-end">NAČÍTÁM ČLÁNKY…</div>`;
-  }
-
-  try {
-    await loadBlogArticles();
-  } catch (error) {
-    view.innerHTML = `<div class="blog-list-end">ČLÁNKY SE NEPODAŘILO NAČÍST</div>`;
-    console.error(error);
-    return;
-  }
-
-  const batchSize = 5;
-  const sortedArticles = getSortedBlogArticles()
-    .filter(({article}) => !categoryFilter || article.category === categoryFilter);
-
-  const filteredReadingMinutes = sortedArticles.reduce((sum, {article}) => sum + articleReadingMinutes(article), 0);
-  const allCategoriesCount = new Set(BLOG_ARTICLES.map(article => article.category)).size;
-  const allReadingMinutes = BLOG_ARTICLES.reduce((sum, article) => sum + articleReadingMinutes(article), 0);
-  let visibleCount = Math.min(batchSize, sortedArticles.length);
-
-  view.innerHTML = `
-    ${categoryFilter ? `
-      <div class="blog-filter-title">
-        <span>${categoryFilter}</span>
-        <button type="button" class="blog-filter-clear" data-blog-filter-back aria-label="Zrušit filtr ${categoryFilter}" title="Zrušit filtr">×</button>
-        <span class="blog-filter-stats">${sortedArticles.length} ${sortedArticles.length === 1 ? "článek" : (sortedArticles.length >= 2 && sortedArticles.length <= 4 ? "články" : "článků")} · ${filteredReadingMinutes} min čtení</span>
-      </div>
-    ` : `
-      <div class="blog-filter-title blog-filter-title--all">
-        <span class="blog-filter-stats">${BLOG_ARTICLES.length} ${BLOG_ARTICLES.length === 1 ? "článek" : (BLOG_ARTICLES.length >= 2 && BLOG_ARTICLES.length <= 4 ? "články" : "článků")} · ${allCategoriesCount} ${allCategoriesCount === 1 ? "štítek" : (allCategoriesCount >= 2 && allCategoriesCount <= 4 ? "štítky" : "štítků")} · ${allReadingMinutes} min čtení</span>
-        <a class="blog-rss-link" href="/rss.xml" type="application/rss+xml" aria-label="RSS kanál DEVBYBOU Blog" title="RSS">
-          <svg viewBox="0 0 32 32" aria-hidden="true">
-            <circle cx="8" cy="24" r="2.8"></circle>
-            <path d="M6 14a12 12 0 0 1 12 12"></path>
-            <path d="M6 6a20 20 0 0 1 20 20"></path>
-          </svg>
-          <span>RSS</span>
-        </a>
-      </div>
-    `}
-    <div class="blog-list" id="blogList"></div>
-    <div class="blog-list-sentinel" id="blogListSentinel" aria-hidden="true"></div>
-    <div class="blog-list-end" id="blogListEnd" hidden>NIC VÍC TU NENÍ</div>
-  `;
-
-  const list = view.querySelector("#blogList");
-  const sentinel = view.querySelector("#blogListSentinel");
-  const end = view.querySelector("#blogListEnd");
-
-  view.querySelector("[data-blog-filter-back]")?.addEventListener("click", () => renderBlogList());
-
-  function bindBlogCards(){
-    list.querySelectorAll("[data-blog-index]:not([data-bound])").forEach(card => {
-      card.dataset.bound = "1";
-      const openArticle = () => renderBlogArticle(Number(card.dataset.blogIndex));
-      card.addEventListener("click", openArticle);
-      card.addEventListener("keydown", event => {
-        if (event.target.closest("[data-blog-category]")) return;
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          openArticle();
-        }
-      });
-      card.querySelector("[data-blog-category]")?.addEventListener("click", event => {
-        event.stopPropagation();
-        renderBlogList(event.currentTarget.dataset.blogCategory);
-      });
-    });
-  }
-
-  function paint(){
-    list.innerHTML = sortedArticles
-      .slice(0, visibleCount)
-      .map(({article, originalIndex}) => renderBlogCard(article, originalIndex))
-      .join("");
-    bindBlogCards();
-    const finished = visibleCount >= sortedArticles.length;
-    sentinel.hidden = finished;
-    end.hidden = !finished;
-  }
-
-  paint();
-
-  if (visibleCount < sortedArticles.length) {
-    const scroller = infoSheet.querySelector(".info-sheet-card");
-    blogListObserver = new IntersectionObserver((entries) => {
-      if (!entries.some(entry => entry.isIntersecting)) return;
-      visibleCount = Math.min(visibleCount + batchSize, sortedArticles.length);
-      paint();
-      if (visibleCount >= sortedArticles.length && blogListObserver) {
-        blogListObserver.disconnect();
-        blogListObserver = null;
-      }
-    }, {root:scroller || null, rootMargin:"0px 0px 240px 0px", threshold:0.01});
-    blogListObserver.observe(sentinel);
-  }
-}
-
-function getSavedBlogTheme(){
-  try { return localStorage.getItem(BLOG_THEME_STORAGE_KEY) === "light" ? "light" : "dark"; }
-  catch (_) { return "dark"; }
-}
-
-function applyBlogTheme(theme){
-  const card = infoSheet.querySelector(".info-sheet-card");
-  const toggle = infoSheetContent.querySelector(".blog-theme-toggle");
-  if (!card) return;
-  const isLight = theme === "light";
-  card.classList.toggle("blog-reader-light", isLight);
-  card.classList.toggle("blog-reader-dark", !isLight);
-  if (toggle) {
-    toggle.classList.toggle("is-light", isLight);
-    toggle.setAttribute("aria-pressed", String(isLight));
-    toggle.setAttribute("aria-label", isLight ? "Přepnout článek do tmavého režimu" : "Přepnout článek do světlého režimu");
-  }
-}
-
-function clearBlogReaderTheme(){
-  window.DEVBYBOU_ARTICLE_VIEWS?.dispose?.();
-  window.DEVBYBOU_ARTICLE_REACTIONS?.dispose?.();
-  const card = infoSheet.querySelector(".info-sheet-card");
-  card?.classList.remove("blog-reader-light", "blog-reader-dark");
-}
-
-function getNextBlogArticleIndex(currentIndex){
-  if (BLOG_ARTICLES.length < 2) return null;
-  const candidates = BLOG_ARTICLES.map((_, index) => index).filter(index => index !== currentIndex);
-  const seedSource = BLOG_ARTICLES[currentIndex]?.title || String(currentIndex);
-  let seed = 0;
-  for (let i = 0; i < seedSource.length; i++) seed = ((seed * 31) + seedSource.charCodeAt(i)) >>> 0;
-  return candidates[seed % candidates.length];
-}
-
-async function shareBlogArticle(article){
-  const articleUrl = `${location.origin}/clanek/${article.slug}/`;
-  const shareData = {title:article.title, text:article.excerpt, url:articleUrl};
-  if (navigator.share) {
-    try { await navigator.share(shareData); return; }
-    catch (error) { if (error?.name === "AbortError") return; }
-  }
-  try {
-    await navigator.clipboard.writeText(articleUrl);
-    const button = infoSheetContent.querySelector("[data-blog-share]");
-    if (button) {
-      const original = button.textContent;
-      button.textContent = "Odkaz zkopírován";
-      setTimeout(() => { button.textContent = original; }, 1600);
-    }
-  } catch (_) {
-    window.prompt("Zkopírujte odkaz na článek:", articleUrl);
-  }
-}
-
-
-let articleCommonLoader = null;
-async function ensureArticleCommon(){
-  if (window.DEVBYBOU_ARTICLE_UI?.renderEndFooter) return;
-  if (!articleCommonLoader) {
-    articleCommonLoader = new Promise((resolve, reject) => {
-      const existing = document.querySelector('script[data-article-common-loader]');
-      if (existing) {
-        existing.addEventListener('load', resolve, {once:true});
-        existing.addEventListener('error', reject, {once:true});
-        return;
-      }
-      const script = document.createElement('script');
-      script.src = '/assets/js/article-common.js?v=280';
-      script.defer = true;
-      script.dataset.articleCommonLoader = '1';
-      script.onload = resolve;
-      script.onerror = reject;
-      document.head.appendChild(script);
-    });
-  }
-  await articleCommonLoader;
-}
-
-async function renderBlogArticleBySlug(slug, options={}){
-  try { await loadBlogArticles(); }
-  catch (error) { console.error(error); return; }
-  const index = BLOG_ARTICLES.findIndex(article => article.slug === slug);
-  if (index >= 0) return renderBlogArticle(index, options);
-}
-
-async function renderBlogArticle(index, {pushHistory=true} = {}){
-  try {
-    await loadBlogArticles();
-    await ensureArticleCommon();
-  }
-  catch (error) { console.error(error); return; }
-
-  const article = BLOG_ARTICLES[index];
-  if (!article) return;
-
-  currentBlogArticleIndex = index;
-  if (pushHistory) {
-    history.pushState(
-      {devbybouOverlay:true, kind:"info:blog", devbybouBlogArticle:true, articleIndex:index, articleSlug:article.slug},
-      "",
-      `/clanek/${article.slug}/`
-    );
-  }
-
-  infoSheetContent.innerHTML = article.articleHtml;
-  window.DEVBYBOU_ARTICLE_UI?.renderEndFooter(infoSheetContent.querySelector("[data-article-end-footer]"));
-
-  const scroller = infoSheet.querySelector(".info-sheet-card");
-  scroller?.scrollTo({top:0, behavior:"smooth"});
-  applyBlogTheme(getSavedBlogTheme());
-
-  window.DEVBYBOU_ARTICLE_VIEWS?.mount({
-    slug:article.slug,
-    articleElement:infoSheetContent.querySelector(".blog-detail"),
-    counterElement:infoSheetContent.querySelector("[data-article-view-count]")
-  });
-  window.DEVBYBOU_ARTICLE_REACTIONS?.mount({
-    slug:article.slug,
-    rootElement:infoSheetContent
-  });
-
-  infoSheetContent.querySelector(".blog-theme-toggle")?.addEventListener("click", () => {
-    const nextTheme = getSavedBlogTheme() === "light" ? "dark" : "light";
-    try { localStorage.setItem(BLOG_THEME_STORAGE_KEY, nextTheme); } catch (_) {}
-    applyBlogTheme(nextTheme);
-  });
-
-  const detailCategory = infoSheetContent.querySelector(".blog-detail-category");
-  if (detailCategory) {
-    detailCategory.dataset.blogDetailCategory = article.category;
-    detailCategory.setAttribute("role", "button");
-    detailCategory.setAttribute("tabindex", "0");
-    detailCategory.setAttribute("aria-label", `Zobrazit články v kategorii ${article.category}`);
-  }
-
-  infoSheetContent.querySelector(".blog-back")?.addEventListener("click", event => {
-    event.preventDefault();
-    if (history.state?.devbybouBlogArticle) history.back();
-    else {
-      currentBlogArticleIndex = null;
-      clearBlogReaderTheme();
-      infoSheetContent.innerHTML = INFO_OVERLAYS.blog;
-      renderBlogList();
-      scroller?.scrollTo({top:0, behavior:"smooth"});
-    }
-  });
-
-  infoSheetContent.querySelector("[data-blog-detail-category]")?.addEventListener("click", event => {
-    currentBlogArticleIndex = null;
-    clearBlogReaderTheme();
-    infoSheetContent.innerHTML = INFO_OVERLAYS.blog;
-    renderBlogList(event.currentTarget.dataset.blogDetailCategory);
-    scroller?.scrollTo({top:0, behavior:"smooth"});
-  });
-
-  infoSheetContent.querySelector("[data-blog-all]")?.addEventListener("click", () => {
-    currentBlogArticleIndex = null;
-    clearBlogReaderTheme();
-    infoSheetContent.innerHTML = INFO_OVERLAYS.blog;
-    renderBlogList();
-    history.replaceState({devbybouOverlay:true, kind:"info:blog"}, "", getOverlayUrl("info:blog"));
-    scroller?.scrollTo({top:0, behavior:"smooth"});
-  });
-
-  infoSheetContent.querySelector("[data-blog-share]")?.addEventListener("click", () => shareBlogArticle(article));
-}
 
 function initReferenceInteraction(){
   const showcases = infoSheetContent.querySelectorAll('.reference-showcase');
@@ -978,8 +559,6 @@ btcPeekBadge?.addEventListener("keydown", (event) => {
 });
 
 function openInfoSheet(kind){
-  currentBlogArticleIndex = null;
-  clearBlogReaderTheme();
   document.getElementById("sheet")?.classList.remove("open");
   document.getElementById("sheet")?.setAttribute("aria-hidden","true");
   pushOverlayHistory("info:"+kind);
@@ -990,10 +569,9 @@ function openInfoSheet(kind){
     initAboutScreenshotStack();
     infoSheetContent.querySelector("[data-about-blog-article]")?.addEventListener("click", (e) => {
       e.preventDefault();
-      renderBlogArticleBySlug("web-v-druhe-polovine-dvacatych-let");
+      location.href = "/clanek/web-v-druhe-polovine-dvacatych-let/";
     });
   }
-  if(kind === "blog") renderBlogList();
   infoSheet.classList.add("open");
   infoSheet.setAttribute("aria-hidden","false");
   document.body.style.overflow="hidden";
@@ -1009,34 +587,10 @@ function openInfoSheet(kind){
     });
   }
 }
-function closeInfoSheet(forceAll=false){
-  if (
-    forceAll &&
-    currentBlogArticleIndex !== null &&
-    history.state?.devbybouBlogArticle
-  ) {
-    // X zavírá celý Blog detail okamžitě.
-    // History uklidíme až po schování overlaye, aby kliknutí vždy působilo okamžitě.
-    currentBlogArticleIndex = null;
-    clearBlogReaderTheme();
-    overlayHistoryActive = false;
-    hideAllOverlays();
-
-    setTimeout(() => {
-      try {
-        history.go(-2);
-      } catch (e) {}
-    }, 0);
-    return;
-  }
-
-  if (forceAll) {
-    currentBlogArticleIndex = null;
-    clearBlogReaderTheme();
-  }
+function closeInfoSheet(){
   requestOverlayClose();
 }
-document.getElementById("blogLink").addEventListener("click",e=>{e.preventDefault(); openInfoSheet("blog");});
+document.getElementById("blogLink")?.addEventListener("click", () => { location.href = "/blog/"; });
 document.getElementById("aboutLink").addEventListener("click",e=>{e.preventDefault(); openInfoSheet("about");});
 document.getElementById("pricingLink").addEventListener("click",e=>{e.preventDefault(); openInfoSheet("pricing");});
 document.getElementById("referencesLink").addEventListener("click",e=>{e.preventDefault(); openInfoSheet("references");});
@@ -1190,9 +744,9 @@ document.querySelector("[data-references]").addEventListener("click",()=>{
   openInfoSheet("references");
   menuPanel.classList.remove("open");
 });
-document.querySelector("[data-blog]").addEventListener("click",()=>{
-  openInfoSheet("blog");
+document.querySelector("[data-blog]")?.addEventListener("click",()=>{
   menuPanel.classList.remove("open");
+  location.href = "/blog/";
 });
 
 (() => {
@@ -1789,11 +1343,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Backward compatibility with the older ?open=... links.
   const legacyOpen = (params.get("open") || "").trim();
+
+  // Blog is a standalone page now; old overlay URLs redirect to /blog/.
+  if (requestedDetail === "blog" || legacyOpen === "blog") {
+    location.replace("/blog/");
+    return;
+  }
+
   const legacyMap = {
     references: "info:references",
     pricing: "info:pricing",
     about: "info:about",
-    blog: "info:blog",
     bitcoin: "info:bitcoin",
     cookies: "info:cookies"
   };
