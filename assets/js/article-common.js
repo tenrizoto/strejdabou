@@ -65,3 +65,46 @@
   });
 })();
 
+(() => {
+  function initToplist() {
+    if (document.getElementById("toplistcz1843076")) return;
+    if (!document.body) return;
+
+    const link = document.createElement("a");
+    link.href = "https://www.toplist.cz/stat/1843076/";
+    link.id = "toplistcz1843076";
+    link.title = "TOPlist";
+    link.setAttribute("aria-hidden", "true");
+    link.style.position = "absolute";
+    link.style.width = "1px";
+    link.style.height = "1px";
+    link.style.overflow = "hidden";
+
+    const img = document.createElement("img");
+    const e = encodeURIComponent;
+    const s = window.screen;
+
+    img.src =
+      "https://toplist.cz/dot.asp?id=1843076" +
+      "&http=" + e(document.referrer) +
+      "&t=" + e(document.title) +
+      "&l=" + e(document.URL) +
+      "&wi=" + e(s.width) +
+      "&he=" + e(s.height) +
+      "&cd=" + e(s.colorDepth);
+
+    img.width = 1;
+    img.height = 1;
+    img.alt = "TOPlist";
+    img.border = 0;
+
+    link.appendChild(img);
+    document.body.appendChild(link);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initToplist, {once:true});
+  } else {
+    initToplist();
+  }
+})();
