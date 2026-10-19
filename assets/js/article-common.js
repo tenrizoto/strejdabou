@@ -64,3 +64,34 @@
     siteFooterLinks: ARTICLE_SITE_FOOTER_LINKS
   });
 })();
+
+(() => {
+  if (document.getElementById("toplistcz1843076")) return;
+
+  const link = document.createElement("a");
+  link.href = "https://www.toplist.cz";
+  link.id = "toplistcz1843076";
+  link.title = "TOPlist";
+
+  const img = document.createElement("img");
+
+  const e = encodeURIComponent;
+  const s = window.screen;
+
+  img.src =
+    "https://toplist.cz/count.asp?id=1843076&logo=3" +
+    "&http=" + e(document.referrer) +
+    "&t=" + e(document.title) +
+    "&l=" + e(document.URL) +
+    "&wi=" + e(s.width) +
+    "&he=" + e(s.height) +
+    "&cd=" + e(s.colorDepth);
+
+  img.width = 88;
+  img.height = 31;
+  img.alt = "TOPlist";
+  img.border = "0";
+
+  link.appendChild(img);
+  document.body.appendChild(link);
+})();
