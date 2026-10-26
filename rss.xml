@@ -19,8 +19,17 @@
       type="application/rss+xml"
     />
 
-    <lastBuildDate>Mon, 19 Oct 2026 12:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 26 Oct 2026 12:00:00 GMT</lastBuildDate>
 
+    <item>
+      <title>Claude přeskočil paywall. Problém není pár dolarů, ale že se rozhodl sám</title>
+      <link>https://www.strejdabou.cz/clanek/claude-preskocil-paywall/</link>
+      <guid isPermaLink="true">https://www.strejdabou.cz/clanek/claude-preskocil-paywall/</guid>
+      <pubDate>Mon, 26 Oct 2026 12:00:00 GMT</pubDate>
+      <category>Web, AI a technologie</category>
+      <description>Claude dostal za úkol sehnat data. Narazil na paywall, chvíli se na něj díval a pak udělal to, co by udělal zkušený uživatel internetu: našel cestu kolem. Nikdo mu to přitom neřekl. Pár dolarů Georgii asi nezruinuje. Trochu zajímavější je, že AI už začíná chápat překážku jako problém k vyřešení.</description>
+      <enclosure url="https://www.strejdabou.cz/assets/images/article-default-og.png" type="image/png" />
+    </item>
     <item>
       <title>Amerika má Claude. Čína má DeepSeek. Evropa si zatím čte pravidla a má připomínkové řízení</title>
       <link>https://www.strejdabou.cz/clanek/amerika-ma-claude-cina-ma-deepseek-evropa-si-zatim-cte-pravidla/</link>
