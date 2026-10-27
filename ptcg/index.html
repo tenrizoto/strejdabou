@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="dark"><title>BOU/DEX — Pokémon Full Art Collection</title><meta name="description" content="Japonské Pokémon Full Art karty, Art Rare, Special Art Rare a sběratelský checklist."><style>html,body{margin:0;padding:0;min-height:100%;background:#0b1019;color:#e9ecf1;font:15px system-ui}iframe{display:block;width:100%;height:100vh;min-height:700px;border:0}noscript{display:block;padding:25px}</style></head><body>
+<iframe id="boudex" title="BOU/DEX — Pokémon Art Collection" loading="eager" src="https://bou.hradec.info/ptcg/?embed=1" referrerpolicy="strict-origin-when-cross-origin" allow="fullscreen"></iframe>
+<noscript>Pro zobrazení katalogu je potřeba JavaScript. <a href="https://bou.hradec.info/ptcg/">Otevři BOU/DEX přímo</a>.</noscript>
+<script>
+// A short public set link remains on GitHub Pages; all rendering still happens on the PHP origin.
+const setCode=new URLSearchParams(location.search).get('set');
+if(setCode&&/^[A-Za-z0-9_-]{1,25}$/.test(setCode))document.getElementById('boudex').src='https://bou.hradec.info/ptcg/?embed=1&set='+encodeURIComponent(setCode);
+window.addEventListener('message',function(event){
+  if(event.origin!=='https://bou.hradec.info')return;
+  const d=event.data;
+  if(!d)return;
+  if(d.type==='boudex:set'&&(d.code===''||(/^[A-Za-z0-9_-]{1,25}$/.test(d.code)))){
+    const url=new URL(window.location.href);
+    if(d.code)url.searchParams.set('set',d.code);else url.searchParams.delete('set');
+    history.replaceState(null,'',url.pathname+url.search+url.hash);
+    return;
+  }
+  if(d.type!=='boudex:resize'||!Number.isFinite(d.height))return;
+  document.getElementById('boudex').style.height=Math.max(700,Math.min(150000,Math.ceil(d.height)+12))+'px';
+});
+</script>
+</body></html>
