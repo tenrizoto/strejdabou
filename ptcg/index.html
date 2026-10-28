@@ -23,7 +23,7 @@
     root.innerHTML=markup;
     root.querySelectorAll('img[src^="assets/"]').forEach(img=>{img.src=origin+img.getAttribute('src');});
     window.BOUDEX_API_BASE=origin;
-    const script=document.createElement('script');script.src=origin+'assets/app.js?v=15';script.defer=true;
+    const script=document.createElement('script');script.src=origin+'assets/app.js?v=15.1-hotfix';script.defer=true;
     script.onerror=()=>{root.innerHTML='<div id="boudexLoading" class="error">Nepodařilo se načíst kód galerie. <a href="'+origin+'">Přejít na veřejnou galerii</a>.</div>';};
     document.body.appendChild(script);
   }catch(err){
